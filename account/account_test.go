@@ -45,10 +45,15 @@ func (acc AccountStateBank) GetBalance(denom string) State[sdk.Coin] {
 func (acc AccountStateBank) Send(acc2 AccountStateBank, coin sdk.Coin) {
 	return acc.AmountByDenom.Of(coin.Denom).MoveTo(acc2.AmountByDenom.Of(coin.Denom), coin.Amount)
 /*
-	QuerySingle acc.ID + bank + amount + coin.Denom :: Uint256
-	.Zip :: T -> (Uint256, T)
+	Translated into:
+
+	Atomic {
+		QuerySingle acc.ID + bank + amount + coin.Denom :: Uint256
+		Sub coin.Amount :: Uint256
+		Set
 		QuerySingle acc2.ID + bank + amount + coin.Denom :: Uint256
-	.MoveTo :: Uint256 -> (Uint256!, Uint256!)
-		coin.Amount :: Uint256
+		Add coin.Amount :: Uint256
+		Set
+	}
 */
 }
