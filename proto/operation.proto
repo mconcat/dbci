@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package dbci.operation;
+
+option go_package = "github.com/mconcat/dbci/operation/types";
+
+message Uint256 {
+    fixed64 a = 1;
+    fixed64 b = 2;
+    fixed64 c = 3;
+    fixed64 d = 4;
+}
+
+message Int256 {
+    fixed64 a = 1;
+    fixed64 b = 2;
+    fixed64 c = 3;
+    fixed64 d = 4;
+}
+
+message Dec256 {
+    Uint256 significand = 1;
+    uint32 exponent = 2;
+}
+
+message Asset {
+    string denom = 1;
+    optional Uint256 id = 2; // explicitly optional, NFT purpose
+    Uint256 amount = 3;
+}
+
+// FunctionNumeric :: Numeric -> Numeric
+message FunctionNumeric {
+    enum Operator {
+        UNKNOWN = 0;
+        ADD = 1;
+        SUB = 2;
+        SUBFROM = 3;
+        MUL = 4;
+        DIV = 5;
+        LT = 6;
+        LTE = 7;
+        GT = 8;
+        GTE = 9;
+        EQ = 10;
+        NEQ = 11;
+    }
+    Operator operator = 1;
+    oneof operand {
+        uint64 uint64Operand = 2;
+        int64 int64Operand = 3;
+        Uint256 Uint256Operand = 4;
+        Int256 Int256Operand = 5;
+    }
+}
+
+// FunctionSelectField ::
+// a, b proto.Message => a -> b
+// This is equal with FieldDescriptor, I just couldnt found how to import it properly
+message FunctionSelectField {
+    int32 fieldNumber = 1;
+    int32 fieldType = 2; // int8, consider switching to enum
+}
+
+message FunctionSequence {
+    repeated Function fn = 1;
+}
+
+// FunctionHighorder takes a single unary function and lifts it to list level
+// or processes the enumeration without a base function
+// FunctionEnumerable can be used both on list element and enumeration stream
+message FunctionEnumerable {
+    enum FunctionType {
+        UNKNOWN = 0;
+        MAP = 1; // Lift T -> U
+        FILTER = 2; // Lift T -> bool
+        FOLD = 3; // Lift [T] -> U
+        TAKE = 4; // Nullary 
+        TAKEWHILE = 5; // Lift T -> bool
+        DROP = 6;
+        DROPWHILE = 7;
+    }
+    Function fn = 2;
+}
+
+
+message Function {
+    oneof fn {
+        FunctionNumeric numeric = 1;
+        FunctionSelectField selectField = 2;
+        FunctionSequence sequence = 3;
+        FunctionEnumerable enumerable = 4;
+    } 
+}
+
+
+message QueryOperator {
+    FunctionEnumerable fn = 1;
+}
+
+message QueryRequest {
+    repeated QueryOperator ops = 1;
+}
+
+message BytesState {
+    bytes key = 1;
+    bytes value = 2;
+}
+
+message QueryResponse {
+    repeated BytesState bytesEnumarable = 1;    
+}
+
+service QueryService {
+    rpc Query(QueryRequest) returns (QueryResponse);
+}
