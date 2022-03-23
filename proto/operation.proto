@@ -29,6 +29,20 @@ message Asset {
     Uint256 amount = 3;
 }
 
+// SelectSingle :: State
+message SelectSingle {
+    repeated bytes key = 1;
+}
+
+// SelectEnumerable :: Stream<State>
+message SelectEnumerable {
+    repeated bytes prefix = 1;
+    bytes from = 2;
+    bytes to = 3;
+    bool ascending = 4;
+}
+
+
 // FunctionNumeric :: Numeric -> Numeric
 message FunctionNumeric {
     enum Operator {
@@ -46,6 +60,7 @@ message FunctionNumeric {
         NEQ = 11;
     }
     Operator operator = 1;
+    // When the operands are nil, FunctionNumeric act as a n-ary operator on stream of tuple values
     oneof operand {
         uint64 uint64Operand = 2;
         int64 int64Operand = 3;
@@ -53,6 +68,14 @@ message FunctionNumeric {
         Int256 Int256Operand = 5;
     }
 }
+
+// FunctionSet :: T -> T
+// modifies the value with the computated 
+// Usage: SelectField(field) >> FunctionNumeric(ADD, 3) >> FunctionSet()
+// select field of the current item, add 3 to the field, and set
+message FunctionSet {}
+
+message FunctionDelete {}
 
 // FunctionSelectField ::
 // a, b proto.Message => a -> b
@@ -79,8 +102,16 @@ message FunctionEnumerable {
         TAKEWHILE = 5; // Lift T -> bool
         DROP = 6;
         DROPWHILE = 7;
+        FOREACH = 8; // Same with map but returns the original sequence
     }
     Function fn = 2;
+}
+
+// FunctionSplit :: (a -> b) -> (a -> c) -> .. -> merge ((b, c, ..) -> d) -> (a -> d)
+// Use FunctionSplit to simulate Join operations
+message FunctionSplit {
+    repeated Function fn = 1;
+    Function merge = 2;
 }
 
 
@@ -89,17 +120,9 @@ message Function {
         FunctionNumeric numeric = 1;
         FunctionSelectField selectField = 2;
         FunctionSequence sequence = 3;
-        FunctionEnumerable enumerable = 4;
+        FunctionSplit split = 4;
+        FunctionEnumerable enumerable = 5;
     } 
-}
-
-
-message QueryOperator {
-    FunctionEnumerable fn = 1;
-}
-
-message QueryRequest {
-    repeated QueryOperator ops = 1;
 }
 
 message BytesState {
@@ -107,10 +130,28 @@ message BytesState {
     bytes value = 2;
 }
 
-message QueryResponse {
+message QueryEnumerableRequest {
+    SelectEnumerable select = 1;
+    repeated FunctionEnumerable ops = 2;
+}
+
+message QueryEnumerableResponse {
     repeated BytesState bytesEnumarable = 1;    
 }
 
-service QueryService {
-    rpc Query(QueryRequest) returns (QueryResponse);
+message QuerySingleRequest {
+    SelectSingle select = 1;
+    repeated Function ops = 2;
+}
+
+message QuerySingleResponse {
+    BytesState bytesSingle = 1;
+}
+
+service QueryEnumerableService {
+    rpc QueryEnumerable(QueryEnumerableRequest) returns (QueryEnumerableResponse);
+}
+
+service QuerySingleService {
+    rpc QuerySingle(QuerySingleRequest) returns (QuerySingleResponse);
 }

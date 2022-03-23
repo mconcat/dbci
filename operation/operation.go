@@ -93,7 +93,7 @@ type FunctionSelectField[T, U proto.Message] struct { types.FunctionSelectField 
 var _ UnaryFucntion[T, U] = FunctionSelectField[T, U]{}
 func (FunctionSelectField[T, U]) IsUnaryFunction(_ T) (res U) { return }
 func (fn FunctionSelectField[T, U]) ProtoFunction() types.Function { return fn.FunctionSelectField }
-func SelectField[T, U proto.Message](getChild func(T) U, number int32) FunctionSelectField[T, U] {
+func SelectField[T, U proto.Message](getChild func(T) U, number int32) FunctionSelectField[T, U] { // how to remove number
 	field := T{}.ProtoReflect().Descriptor().Fields().ByNumber(number)
 	return FunctionSelectField[T, U]{
 		FieldNumber: field.Number(),

@@ -8,6 +8,8 @@ import (
 	dbm "github.com/tendermint/tm-db"
 )
 
+
+
 type KeySegment interface {
 	KeyString() string
 }
@@ -54,21 +56,6 @@ type Account interface {
 	KVStore() dbm.KVStore
 }
 
-type AccountLocalUserStateAuth struct {
-	// Copied from auth.pb.go/BaseAccount
-	// should be moved
-	Address State[string]
-	PubKey State[[]byte]
-	AccountNumber State[uint64]
-	Sequence State[uint64]
-}
-
-type AccountLocalUserBank struct {
-	// Copied from bank
-	// should be moved
-	AmountByDenom Mapping[sdk.Coin]
-
-}
 
 type AccountLocalUser struct {
 	store dbm.KVStore

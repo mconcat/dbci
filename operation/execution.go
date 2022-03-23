@@ -14,6 +14,8 @@ func ExecutePrimitiveNumeric[T PrimitiveNumeric](operator types.FunctionNumeric_
 		return v+operand
 	case types.FunctionNumeric_SUB:
 		return v-operand
+	case types.FunctionNumeric_SUBFROM:
+		return operand-v
 	}
 }
 
