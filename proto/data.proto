@@ -1,6 +1,0 @@
-syntax = "proto3";
-
-package dbci.data;
-
-option go_package = "github.com/mconcat/dbci/data/types";
-

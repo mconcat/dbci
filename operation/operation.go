@@ -151,3 +151,11 @@ func queryBuild[T, U any](input QueryBuilder[T], op types.QueryOperator) QueryBu
 //   first100 := TakeFirst(100)(filtered)
 //   return first100
 // }
+
+// example V2:
+// SelectEnumerable {
+//   FromIterator { start, end }
+//   Map { Field { MyDataType.GetSomeIntField } }
+//   Filter { GT { uint64(500) } }
+//   TakeFirst { 100 }
+// }

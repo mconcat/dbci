@@ -20,6 +20,149 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type FunctionEnumerable_FunctionType int32
+
+const (
+	FunctionEnumerable_UNKNOWN   FunctionEnumerable_FunctionType = 0
+	FunctionEnumerable_MAP       FunctionEnumerable_FunctionType = 1  // Lift T -> U, pure
+	FunctionEnumerable_FILTER    FunctionEnumerable_FunctionType = 2  // Lift T -> bool, pure
+	FunctionEnumerable_FOLD      FunctionEnumerable_FunctionType = 3  // Lift [T] -> U, pure
+	FunctionEnumerable_TAKE      FunctionEnumerable_FunctionType = 4  // Nullary, pure
+	FunctionEnumerable_TAKEWHILE FunctionEnumerable_FunctionType = 5  // Lift T -> bool, pure
+	FunctionEnumerable_TAKEFIRST FunctionEnumerable_FunctionType = 6  // Nullary, returns single, pure
+	FunctionEnumerable_TAKELAST  FunctionEnumerable_FunctionType = 7  // pure
+	FunctionEnumerable_DROP      FunctionEnumerable_FunctionType = 8  // pure
+	FunctionEnumerable_DROPWHILE FunctionEnumerable_FunctionType = 9  // pure
+	FunctionEnumerable_FOREACH   FunctionEnumerable_FunctionType = 10 // Lift T -> U, effectful
+	FunctionEnumerable_CONCAT    FunctionEnumerable_FunctionType = 11 // pure
+	FunctionEnumerable_FLATMAP   FunctionEnumerable_FunctionType = 12 // MAP andthen CONCAT, fn should return enumerable
+	FunctionEnumerable_SETALL    FunctionEnumerable_FunctionType = 13 // effectful
+	FunctionEnumerable_DELETEALL FunctionEnumerable_FunctionType = 14 // effectful
+)
+
+// Enum value maps for FunctionEnumerable_FunctionType.
+var (
+	FunctionEnumerable_FunctionType_name = map[int32]string{
+		0:  "UNKNOWN",
+		1:  "MAP",
+		2:  "FILTER",
+		3:  "FOLD",
+		4:  "TAKE",
+		5:  "TAKEWHILE",
+		6:  "TAKEFIRST",
+		7:  "TAKELAST",
+		8:  "DROP",
+		9:  "DROPWHILE",
+		10: "FOREACH",
+		11: "CONCAT",
+		12: "FLATMAP",
+		13: "SETALL",
+		14: "DELETEALL",
+	}
+	FunctionEnumerable_FunctionType_value = map[string]int32{
+		"UNKNOWN":   0,
+		"MAP":       1,
+		"FILTER":    2,
+		"FOLD":      3,
+		"TAKE":      4,
+		"TAKEWHILE": 5,
+		"TAKEFIRST": 6,
+		"TAKELAST":  7,
+		"DROP":      8,
+		"DROPWHILE": 9,
+		"FOREACH":   10,
+		"CONCAT":    11,
+		"FLATMAP":   12,
+		"SETALL":    13,
+		"DELETEALL": 14,
+	}
+)
+
+func (x FunctionEnumerable_FunctionType) Enum() *FunctionEnumerable_FunctionType {
+	p := new(FunctionEnumerable_FunctionType)
+	*p = x
+	return p
+}
+
+func (x FunctionEnumerable_FunctionType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FunctionEnumerable_FunctionType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_operation_proto_enumTypes[0].Descriptor()
+}
+
+func (FunctionEnumerable_FunctionType) Type() protoreflect.EnumType {
+	return &file_proto_operation_proto_enumTypes[0]
+}
+
+func (x FunctionEnumerable_FunctionType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FunctionEnumerable_FunctionType.Descriptor instead.
+func (FunctionEnumerable_FunctionType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{8, 0}
+}
+
+type OperationEnumerable_OperationType int32
+
+const (
+	OperationEnumerable_UNKNOWN OperationEnumerable_OperationType = 0
+	OperationEnumerable_SELECT  OperationEnumerable_OperationType = 1
+	OperationEnumerable_SET     OperationEnumerable_OperationType = 2
+	OperationEnumerable_DELETE  OperationEnumerable_OperationType = 3
+	// create depends on the type of enumerable.
+	// for mapping enumerable, the elem is stored under the primitive key
+	// for queue enumerable, the elem is stored at the last position
+	OperationEnumerable_CREATE OperationEnumerable_OperationType = 4
+)
+
+// Enum value maps for OperationEnumerable_OperationType.
+var (
+	OperationEnumerable_OperationType_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "SELECT",
+		2: "SET",
+		3: "DELETE",
+		4: "CREATE",
+	}
+	OperationEnumerable_OperationType_value = map[string]int32{
+		"UNKNOWN": 0,
+		"SELECT":  1,
+		"SET":     2,
+		"DELETE":  3,
+		"CREATE":  4,
+	}
+)
+
+func (x OperationEnumerable_OperationType) Enum() *OperationEnumerable_OperationType {
+	p := new(OperationEnumerable_OperationType)
+	*p = x
+	return p
+}
+
+func (x OperationEnumerable_OperationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (OperationEnumerable_OperationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_operation_proto_enumTypes[1].Descriptor()
+}
+
+func (OperationEnumerable_OperationType) Type() protoreflect.EnumType {
+	return &file_proto_operation_proto_enumTypes[1]
+}
+
+func (x OperationEnumerable_OperationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use OperationEnumerable_OperationType.Descriptor instead.
+func (OperationEnumerable_OperationType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{9, 0}
+}
+
 type FunctionNumeric_Operator int32
 
 const (
@@ -80,11 +223,11 @@ func (x FunctionNumeric_Operator) String() string {
 }
 
 func (FunctionNumeric_Operator) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_operation_proto_enumTypes[0].Descriptor()
+	return file_proto_operation_proto_enumTypes[2].Descriptor()
 }
 
 func (FunctionNumeric_Operator) Type() protoreflect.EnumType {
-	return &file_proto_operation_proto_enumTypes[0]
+	return &file_proto_operation_proto_enumTypes[2]
 }
 
 func (x FunctionNumeric_Operator) Number() protoreflect.EnumNumber {
@@ -93,138 +236,175 @@ func (x FunctionNumeric_Operator) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use FunctionNumeric_Operator.Descriptor instead.
 func (FunctionNumeric_Operator) EnumDescriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{6, 0}
+	return file_proto_operation_proto_rawDescGZIP(), []int{15, 0}
 }
 
-type FunctionEffectful_FunctionType int32
+type FunctionBoolean_Operator int32
 
 const (
-	FunctionEffectful_UNKNOWN FunctionEffectful_FunctionType = 0
-	FunctionEffectful_SELECT  FunctionEffectful_FunctionType = 1
-	FunctionEffectful_SET     FunctionEffectful_FunctionType = 2
-	FunctionEffectful_DELETE  FunctionEffectful_FunctionType = 3
+	FunctionBoolean_UNKNOWN FunctionBoolean_Operator = 0
+	FunctionBoolean_AND     FunctionBoolean_Operator = 1
+	FunctionBoolean_OR      FunctionBoolean_Operator = 2
+	FunctionBoolean_XOR     FunctionBoolean_Operator = 3
+	FunctionBoolean_NOT     FunctionBoolean_Operator = 4
 )
 
-// Enum value maps for FunctionEffectful_FunctionType.
+// Enum value maps for FunctionBoolean_Operator.
 var (
-	FunctionEffectful_FunctionType_name = map[int32]string{
+	FunctionBoolean_Operator_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "AND",
+		2: "OR",
+		3: "XOR",
+		4: "NOT",
+	}
+	FunctionBoolean_Operator_value = map[string]int32{
+		"UNKNOWN": 0,
+		"AND":     1,
+		"OR":      2,
+		"XOR":     3,
+		"NOT":     4,
+	}
+)
+
+func (x FunctionBoolean_Operator) Enum() *FunctionBoolean_Operator {
+	p := new(FunctionBoolean_Operator)
+	*p = x
+	return p
+}
+
+func (x FunctionBoolean_Operator) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (FunctionBoolean_Operator) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_operation_proto_enumTypes[3].Descriptor()
+}
+
+func (FunctionBoolean_Operator) Type() protoreflect.EnumType {
+	return &file_proto_operation_proto_enumTypes[3]
+}
+
+func (x FunctionBoolean_Operator) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use FunctionBoolean_Operator.Descriptor instead.
+func (FunctionBoolean_Operator) EnumDescriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{16, 0}
+}
+
+type OperationSingle_OperationType int32
+
+const (
+	OperationSingle_UNKNOWN OperationSingle_OperationType = 0
+	OperationSingle_SELECT  OperationSingle_OperationType = 1
+	OperationSingle_SET     OperationSingle_OperationType = 2
+	OperationSingle_DELETE  OperationSingle_OperationType = 3
+	OperationSingle_CREATE  OperationSingle_OperationType = 4
+)
+
+// Enum value maps for OperationSingle_OperationType.
+var (
+	OperationSingle_OperationType_name = map[int32]string{
 		0: "UNKNOWN",
 		1: "SELECT",
 		2: "SET",
 		3: "DELETE",
+		4: "CREATE",
 	}
-	FunctionEffectful_FunctionType_value = map[string]int32{
+	OperationSingle_OperationType_value = map[string]int32{
 		"UNKNOWN": 0,
 		"SELECT":  1,
 		"SET":     2,
 		"DELETE":  3,
+		"CREATE":  4,
 	}
 )
 
-func (x FunctionEffectful_FunctionType) Enum() *FunctionEffectful_FunctionType {
-	p := new(FunctionEffectful_FunctionType)
+func (x OperationSingle_OperationType) Enum() *OperationSingle_OperationType {
+	p := new(OperationSingle_OperationType)
 	*p = x
 	return p
 }
 
-func (x FunctionEffectful_FunctionType) String() string {
+func (x OperationSingle_OperationType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (FunctionEffectful_FunctionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_operation_proto_enumTypes[1].Descriptor()
+func (OperationSingle_OperationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_operation_proto_enumTypes[4].Descriptor()
 }
 
-func (FunctionEffectful_FunctionType) Type() protoreflect.EnumType {
-	return &file_proto_operation_proto_enumTypes[1]
+func (OperationSingle_OperationType) Type() protoreflect.EnumType {
+	return &file_proto_operation_proto_enumTypes[4]
 }
 
-func (x FunctionEffectful_FunctionType) Number() protoreflect.EnumNumber {
+func (x OperationSingle_OperationType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use FunctionEffectful_FunctionType.Descriptor instead.
-func (FunctionEffectful_FunctionType) EnumDescriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{7, 0}
+// Deprecated: Use OperationSingle_OperationType.Descriptor instead.
+func (OperationSingle_OperationType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{19, 0}
 }
 
-type FunctionEnumerable_FunctionType int32
+type OperationAccount_OperationType int32
 
 const (
-	FunctionEnumerable_UNKNOWN   FunctionEnumerable_FunctionType = 0
-	FunctionEnumerable_MAP       FunctionEnumerable_FunctionType = 1 // Lift T -> U
-	FunctionEnumerable_FILTER    FunctionEnumerable_FunctionType = 2 // Lift T -> bool
-	FunctionEnumerable_FOLD      FunctionEnumerable_FunctionType = 3 // Lift [T] -> U
-	FunctionEnumerable_TAKE      FunctionEnumerable_FunctionType = 4 // Nullary
-	FunctionEnumerable_TAKEWHILE FunctionEnumerable_FunctionType = 5 // Lift T -> bool
-	FunctionEnumerable_TAKEFIRST FunctionEnumerable_FunctionType = 6 // Nullary, returns single
-	FunctionEnumerable_TAKELAST  FunctionEnumerable_FunctionType = 7
-	FunctionEnumerable_DROP      FunctionEnumerable_FunctionType = 8
-	FunctionEnumerable_DROPWHILE FunctionEnumerable_FunctionType = 9
-	FunctionEnumerable_FOREACH   FunctionEnumerable_FunctionType = 10 // Same with map but returns the original sequence
-	FunctionEnumerable_CONCAT    FunctionEnumerable_FunctionType = 11
-	FunctionEnumerable_FLATMAP   FunctionEnumerable_FunctionType = 12 // MAP andthen CONCAT
+	OperationAccount_UNKNOWN    OperationAccount_OperationType = 0
+	OperationAccount_CREATE     OperationAccount_OperationType = 1
+	OperationAccount_DESTRUCT   OperationAccount_OperationType = 2
+	OperationAccount_SUBACCOUNT OperationAccount_OperationType = 3
+	OperationAccount_LOCK       OperationAccount_OperationType = 4
+	OperationAccount_UNLOCK     OperationAccount_OperationType = 5
 )
 
-// Enum value maps for FunctionEnumerable_FunctionType.
+// Enum value maps for OperationAccount_OperationType.
 var (
-	FunctionEnumerable_FunctionType_name = map[int32]string{
-		0:  "UNKNOWN",
-		1:  "MAP",
-		2:  "FILTER",
-		3:  "FOLD",
-		4:  "TAKE",
-		5:  "TAKEWHILE",
-		6:  "TAKEFIRST",
-		7:  "TAKELAST",
-		8:  "DROP",
-		9:  "DROPWHILE",
-		10: "FOREACH",
-		11: "CONCAT",
-		12: "FLATMAP",
+	OperationAccount_OperationType_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "CREATE",
+		2: "DESTRUCT",
+		3: "SUBACCOUNT",
+		4: "LOCK",
+		5: "UNLOCK",
 	}
-	FunctionEnumerable_FunctionType_value = map[string]int32{
-		"UNKNOWN":   0,
-		"MAP":       1,
-		"FILTER":    2,
-		"FOLD":      3,
-		"TAKE":      4,
-		"TAKEWHILE": 5,
-		"TAKEFIRST": 6,
-		"TAKELAST":  7,
-		"DROP":      8,
-		"DROPWHILE": 9,
-		"FOREACH":   10,
-		"CONCAT":    11,
-		"FLATMAP":   12,
+	OperationAccount_OperationType_value = map[string]int32{
+		"UNKNOWN":    0,
+		"CREATE":     1,
+		"DESTRUCT":   2,
+		"SUBACCOUNT": 3,
+		"LOCK":       4,
+		"UNLOCK":     5,
 	}
 )
 
-func (x FunctionEnumerable_FunctionType) Enum() *FunctionEnumerable_FunctionType {
-	p := new(FunctionEnumerable_FunctionType)
+func (x OperationAccount_OperationType) Enum() *OperationAccount_OperationType {
+	p := new(OperationAccount_OperationType)
 	*p = x
 	return p
 }
 
-func (x FunctionEnumerable_FunctionType) String() string {
+func (x OperationAccount_OperationType) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (FunctionEnumerable_FunctionType) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_operation_proto_enumTypes[2].Descriptor()
+func (OperationAccount_OperationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_proto_operation_proto_enumTypes[5].Descriptor()
 }
 
-func (FunctionEnumerable_FunctionType) Type() protoreflect.EnumType {
-	return &file_proto_operation_proto_enumTypes[2]
+func (OperationAccount_OperationType) Type() protoreflect.EnumType {
+	return &file_proto_operation_proto_enumTypes[5]
 }
 
-func (x FunctionEnumerable_FunctionType) Number() protoreflect.EnumNumber {
+func (x OperationAccount_OperationType) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use FunctionEnumerable_FunctionType.Descriptor instead.
-func (FunctionEnumerable_FunctionType) EnumDescriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{12, 0}
+// Deprecated: Use OperationAccount_OperationType.Descriptor instead.
+func (OperationAccount_OperationType) EnumDescriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{22, 0}
 }
 
 type Uint256 struct {
@@ -439,17 +619,17 @@ func (x *Asset) GetAmount() *Uint256 {
 	return nil
 }
 
-// FromSingle :: State
-type FromSingle struct {
+type BytesPair struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Key [][]byte `protobuf:"bytes,1,rep,name=key,proto3" json:"key,omitempty"`
+	Key   string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 }
 
-func (x *FromSingle) Reset() {
-	*x = FromSingle{}
+func (x *BytesPair) Reset() {
+	*x = BytesPair{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_operation_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -457,13 +637,13 @@ func (x *FromSingle) Reset() {
 	}
 }
 
-func (x *FromSingle) String() string {
+func (x *BytesPair) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FromSingle) ProtoMessage() {}
+func (*BytesPair) ProtoMessage() {}
 
-func (x *FromSingle) ProtoReflect() protoreflect.Message {
+func (x *BytesPair) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_operation_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -475,32 +655,36 @@ func (x *FromSingle) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FromSingle.ProtoReflect.Descriptor instead.
-func (*FromSingle) Descriptor() ([]byte, []int) {
+// Deprecated: Use BytesPair.ProtoReflect.Descriptor instead.
+func (*BytesPair) Descriptor() ([]byte, []int) {
 	return file_proto_operation_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *FromSingle) GetKey() [][]byte {
+func (x *BytesPair) GetKey() string {
 	if x != nil {
 		return x.Key
+	}
+	return ""
+}
+
+func (x *BytesPair) GetValue() []byte {
+	if x != nil {
+		return x.Value
 	}
 	return nil
 }
 
-// FromEnumerable :: Stream<State>
-type FromEnumerable struct {
+// FromKeys :: Enumerable
+type FromKeys struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Prefix    [][]byte `protobuf:"bytes,1,rep,name=prefix,proto3" json:"prefix,omitempty"`
-	From      []byte   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
-	To        []byte   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
-	Ascending bool     `protobuf:"varint,4,opt,name=ascending,proto3" json:"ascending,omitempty"`
+	Keys []string `protobuf:"bytes,1,rep,name=keys,proto3" json:"keys,omitempty"`
 }
 
-func (x *FromEnumerable) Reset() {
-	*x = FromEnumerable{}
+func (x *FromKeys) Reset() {
+	*x = FromKeys{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_proto_operation_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -508,13 +692,13 @@ func (x *FromEnumerable) Reset() {
 	}
 }
 
-func (x *FromEnumerable) String() string {
+func (x *FromKeys) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FromEnumerable) ProtoMessage() {}
+func (*FromKeys) ProtoMessage() {}
 
-func (x *FromEnumerable) ProtoReflect() protoreflect.Message {
+func (x *FromKeys) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_operation_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -526,38 +710,553 @@ func (x *FromEnumerable) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FromEnumerable.ProtoReflect.Descriptor instead.
-func (*FromEnumerable) Descriptor() ([]byte, []int) {
+// Deprecated: Use FromKeys.ProtoReflect.Descriptor instead.
+func (*FromKeys) Descriptor() ([]byte, []int) {
 	return file_proto_operation_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *FromEnumerable) GetPrefix() [][]byte {
+func (x *FromKeys) GetKeys() []string {
+	if x != nil {
+		return x.Keys
+	}
+	return nil
+}
+
+// FromIterator :: Enumerable
+type FromIterator struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Prefix    []string `protobuf:"bytes,1,rep,name=prefix,proto3" json:"prefix,omitempty"`
+	From      string   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	To        string   `protobuf:"bytes,3,opt,name=to,proto3" json:"to,omitempty"`
+	Ascending bool     `protobuf:"varint,4,opt,name=ascending,proto3" json:"ascending,omitempty"`
+}
+
+func (x *FromIterator) Reset() {
+	*x = FromIterator{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FromIterator) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FromIterator) ProtoMessage() {}
+
+func (x *FromIterator) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FromIterator.ProtoReflect.Descriptor instead.
+func (*FromIterator) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *FromIterator) GetPrefix() []string {
 	if x != nil {
 		return x.Prefix
 	}
 	return nil
 }
 
-func (x *FromEnumerable) GetFrom() []byte {
+func (x *FromIterator) GetFrom() string {
+	if x != nil {
+		return x.From
+	}
+	return ""
+}
+
+func (x *FromIterator) GetTo() string {
+	if x != nil {
+		return x.To
+	}
+	return ""
+}
+
+func (x *FromIterator) GetAscending() bool {
+	if x != nil {
+		return x.Ascending
+	}
+	return false
+}
+
+type EnumerableFrom struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to From:
+	//	*EnumerableFrom_Keys
+	//	*EnumerableFrom_Iterator
+	From isEnumerableFrom_From `protobuf_oneof:"from"`
+}
+
+func (x *EnumerableFrom) Reset() {
+	*x = EnumerableFrom{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EnumerableFrom) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EnumerableFrom) ProtoMessage() {}
+
+func (x *EnumerableFrom) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EnumerableFrom.ProtoReflect.Descriptor instead.
+func (*EnumerableFrom) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{7}
+}
+
+func (m *EnumerableFrom) GetFrom() isEnumerableFrom_From {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (x *EnumerableFrom) GetKeys() *FromKeys {
+	if x, ok := x.GetFrom().(*EnumerableFrom_Keys); ok {
+		return x.Keys
+	}
+	return nil
+}
+
+func (x *EnumerableFrom) GetIterator() *FromIterator {
+	if x, ok := x.GetFrom().(*EnumerableFrom_Iterator); ok {
+		return x.Iterator
+	}
+	return nil
+}
+
+type isEnumerableFrom_From interface {
+	isEnumerableFrom_From()
+}
+
+type EnumerableFrom_Keys struct {
+	Keys *FromKeys `protobuf:"bytes,1,opt,name=keys,proto3,oneof"`
+}
+
+type EnumerableFrom_Iterator struct {
+	Iterator *FromIterator `protobuf:"bytes,2,opt,name=iterator,proto3,oneof"`
+}
+
+func (*EnumerableFrom_Keys) isEnumerableFrom_From() {}
+
+func (*EnumerableFrom_Iterator) isEnumerableFrom_From() {}
+
+// FunctionHighorder takes a single unary function and lifts it to list level
+// or processes the enumeration without a base function
+// FunctionEnumerable can be used both on list element and enumeration stream
+type FunctionEnumerable struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type     FunctionEnumerable_FunctionType `protobuf:"varint,1,opt,name=type,proto3,enum=dbci.operation.FunctionEnumerable_FunctionType" json:"type,omitempty"`
+	Function *FunctionSingle                 `protobuf:"bytes,2,opt,name=function,proto3" json:"function,omitempty"`
+}
+
+func (x *FunctionEnumerable) Reset() {
+	*x = FunctionEnumerable{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FunctionEnumerable) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FunctionEnumerable) ProtoMessage() {}
+
+func (x *FunctionEnumerable) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FunctionEnumerable.ProtoReflect.Descriptor instead.
+func (*FunctionEnumerable) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *FunctionEnumerable) GetType() FunctionEnumerable_FunctionType {
+	if x != nil {
+		return x.Type
+	}
+	return FunctionEnumerable_UNKNOWN
+}
+
+func (x *FunctionEnumerable) GetFunction() *FunctionSingle {
+	if x != nil {
+		return x.Function
+	}
+	return nil
+}
+
+type OperationEnumerable struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type     OperationEnumerable_OperationType `protobuf:"varint,1,opt,name=type,proto3,enum=dbci.operation.OperationEnumerable_OperationType" json:"type,omitempty"`
+	From     *EnumerableFrom                   `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	Function []*FunctionEnumerable             `protobuf:"bytes,3,rep,name=function,proto3" json:"function,omitempty"`
+}
+
+func (x *OperationEnumerable) Reset() {
+	*x = OperationEnumerable{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OperationEnumerable) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperationEnumerable) ProtoMessage() {}
+
+func (x *OperationEnumerable) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperationEnumerable.ProtoReflect.Descriptor instead.
+func (*OperationEnumerable) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *OperationEnumerable) GetType() OperationEnumerable_OperationType {
+	if x != nil {
+		return x.Type
+	}
+	return OperationEnumerable_UNKNOWN
+}
+
+func (x *OperationEnumerable) GetFrom() *EnumerableFrom {
 	if x != nil {
 		return x.From
 	}
 	return nil
 }
 
-func (x *FromEnumerable) GetTo() []byte {
+func (x *OperationEnumerable) GetFunction() []*FunctionEnumerable {
 	if x != nil {
-		return x.To
+		return x.Function
 	}
 	return nil
 }
 
-func (x *FromEnumerable) GetAscending() bool {
-	if x != nil {
-		return x.Ascending
-	}
-	return false
+type QueryEnumerableRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ops []*OperationEnumerable `protobuf:"bytes,1,rep,name=ops,proto3" json:"ops,omitempty"`
 }
+
+func (x *QueryEnumerableRequest) Reset() {
+	*x = QueryEnumerableRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[10]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryEnumerableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryEnumerableRequest) ProtoMessage() {}
+
+func (x *QueryEnumerableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[10]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryEnumerableRequest.ProtoReflect.Descriptor instead.
+func (*QueryEnumerableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *QueryEnumerableRequest) GetOps() []*OperationEnumerable {
+	if x != nil {
+		return x.Ops
+	}
+	return nil
+}
+
+type QueryEnumerableResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Pairs []*BytesPair `protobuf:"bytes,1,rep,name=pairs,proto3" json:"pairs,omitempty"`
+}
+
+func (x *QueryEnumerableResponse) Reset() {
+	*x = QueryEnumerableResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryEnumerableResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryEnumerableResponse) ProtoMessage() {}
+
+func (x *QueryEnumerableResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryEnumerableResponse.ProtoReflect.Descriptor instead.
+func (*QueryEnumerableResponse) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *QueryEnumerableResponse) GetPairs() []*BytesPair {
+	if x != nil {
+		return x.Pairs
+	}
+	return nil
+}
+
+// FromKey :: Single
+type FromKey struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+}
+
+func (x *FromKey) Reset() {
+	*x = FromKey{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FromKey) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FromKey) ProtoMessage() {}
+
+func (x *FromKey) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FromKey.ProtoReflect.Descriptor instead.
+func (*FromKey) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *FromKey) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+type FromConstant struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Key   string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+}
+
+func (x *FromConstant) Reset() {
+	*x = FromConstant{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[13]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FromConstant) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FromConstant) ProtoMessage() {}
+
+func (x *FromConstant) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[13]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FromConstant.ProtoReflect.Descriptor instead.
+func (*FromConstant) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *FromConstant) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *FromConstant) GetValue() []byte {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+type SingleFrom struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// Types that are assignable to From:
+	//	*SingleFrom_Key
+	From isSingleFrom_From `protobuf_oneof:"from"`
+}
+
+func (x *SingleFrom) Reset() {
+	*x = SingleFrom{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[14]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *SingleFrom) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SingleFrom) ProtoMessage() {}
+
+func (x *SingleFrom) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[14]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SingleFrom.ProtoReflect.Descriptor instead.
+func (*SingleFrom) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{14}
+}
+
+func (m *SingleFrom) GetFrom() isSingleFrom_From {
+	if m != nil {
+		return m.From
+	}
+	return nil
+}
+
+func (x *SingleFrom) GetKey() *FromKey {
+	if x, ok := x.GetFrom().(*SingleFrom_Key); ok {
+		return x.Key
+	}
+	return nil
+}
+
+type isSingleFrom_From interface {
+	isSingleFrom_From()
+}
+
+type SingleFrom_Key struct {
+	Key *FromKey `protobuf:"bytes,1,opt,name=key,proto3,oneof"`
+}
+
+func (*SingleFrom_Key) isSingleFrom_From() {}
 
 // FunctionNumeric :: Numeric -> Numeric
 type FunctionNumeric struct {
@@ -566,8 +1265,6 @@ type FunctionNumeric struct {
 	unknownFields protoimpl.UnknownFields
 
 	Operator FunctionNumeric_Operator `protobuf:"varint,1,opt,name=operator,proto3,enum=dbci.operation.FunctionNumeric_Operator" json:"operator,omitempty"`
-	// When the operands are nil, FunctionNumeric act as a n-ary operator on stream of tuple values
-	//
 	// Types that are assignable to Operand:
 	//	*FunctionNumeric_Uint64Operand
 	//	*FunctionNumeric_Int64Operand
@@ -579,7 +1276,7 @@ type FunctionNumeric struct {
 func (x *FunctionNumeric) Reset() {
 	*x = FunctionNumeric{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[6]
+		mi := &file_proto_operation_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -592,7 +1289,7 @@ func (x *FunctionNumeric) String() string {
 func (*FunctionNumeric) ProtoMessage() {}
 
 func (x *FunctionNumeric) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[6]
+	mi := &file_proto_operation_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -605,7 +1302,7 @@ func (x *FunctionNumeric) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionNumeric.ProtoReflect.Descriptor instead.
 func (*FunctionNumeric) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{6}
+	return file_proto_operation_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *FunctionNumeric) GetOperator() FunctionNumeric_Operator {
@@ -678,31 +1375,32 @@ func (*FunctionNumeric_Uint256Operand) isFunctionNumeric_Operand() {}
 
 func (*FunctionNumeric_Int256Operand) isFunctionNumeric_Operand() {}
 
-type FunctionEffectful struct {
+type FunctionBoolean struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Ty FunctionEffectful_FunctionType `protobuf:"varint,1,opt,name=ty,proto3,enum=dbci.operation.FunctionEffectful_FunctionType" json:"ty,omitempty"`
+	Operator FunctionBoolean_Operator `protobuf:"varint,1,opt,name=operator,proto3,enum=dbci.operation.FunctionBoolean_Operator" json:"operator,omitempty"`
+	Function []*FunctionSingle        `protobuf:"bytes,2,rep,name=function,proto3" json:"function,omitempty"`
 }
 
-func (x *FunctionEffectful) Reset() {
-	*x = FunctionEffectful{}
+func (x *FunctionBoolean) Reset() {
+	*x = FunctionBoolean{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[7]
+		mi := &file_proto_operation_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *FunctionEffectful) String() string {
+func (x *FunctionBoolean) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FunctionEffectful) ProtoMessage() {}
+func (*FunctionBoolean) ProtoMessage() {}
 
-func (x *FunctionEffectful) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[7]
+func (x *FunctionBoolean) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -713,96 +1411,23 @@ func (x *FunctionEffectful) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FunctionEffectful.ProtoReflect.Descriptor instead.
-func (*FunctionEffectful) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{7}
+// Deprecated: Use FunctionBoolean.ProtoReflect.Descriptor instead.
+func (*FunctionBoolean) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *FunctionEffectful) GetTy() FunctionEffectful_FunctionType {
+func (x *FunctionBoolean) GetOperator() FunctionBoolean_Operator {
 	if x != nil {
-		return x.Ty
+		return x.Operator
 	}
-	return FunctionEffectful_UNKNOWN
+	return FunctionBoolean_UNKNOWN
 }
 
-// FunctionSet :: T -> T
-// modifies the value with the computated
-// Usage: SelectField(field) >> FunctionNumeric(ADD, 3) >> FunctionSet()
-// select field of the current item, add 3 to the field, and set
-type FunctionSet struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *FunctionSet) Reset() {
-	*x = FunctionSet{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[8]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
+func (x *FunctionBoolean) GetFunction() []*FunctionSingle {
+	if x != nil {
+		return x.Function
 	}
-}
-
-func (x *FunctionSet) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FunctionSet) ProtoMessage() {}
-
-func (x *FunctionSet) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[8]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FunctionSet.ProtoReflect.Descriptor instead.
-func (*FunctionSet) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{8}
-}
-
-type FunctionDelete struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-}
-
-func (x *FunctionDelete) Reset() {
-	*x = FunctionDelete{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[9]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *FunctionDelete) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FunctionDelete) ProtoMessage() {}
-
-func (x *FunctionDelete) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[9]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FunctionDelete.ProtoReflect.Descriptor instead.
-func (*FunctionDelete) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{9}
+	return nil
 }
 
 // FunctionSelectField ::
@@ -820,7 +1445,7 @@ type FunctionSelectField struct {
 func (x *FunctionSelectField) Reset() {
 	*x = FunctionSelectField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[10]
+		mi := &file_proto_operation_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -833,7 +1458,7 @@ func (x *FunctionSelectField) String() string {
 func (*FunctionSelectField) ProtoMessage() {}
 
 func (x *FunctionSelectField) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[10]
+	mi := &file_proto_operation_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -846,7 +1471,7 @@ func (x *FunctionSelectField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FunctionSelectField.ProtoReflect.Descriptor instead.
 func (*FunctionSelectField) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{10}
+	return file_proto_operation_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *FunctionSelectField) GetFieldNumber() int32 {
@@ -863,199 +1488,35 @@ func (x *FunctionSelectField) GetFieldType() int32 {
 	return 0
 }
 
-type FunctionSequence struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Fn []*Function `protobuf:"bytes,1,rep,name=fn,proto3" json:"fn,omitempty"`
-}
-
-func (x *FunctionSequence) Reset() {
-	*x = FunctionSequence{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[11]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *FunctionSequence) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FunctionSequence) ProtoMessage() {}
-
-func (x *FunctionSequence) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[11]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FunctionSequence.ProtoReflect.Descriptor instead.
-func (*FunctionSequence) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *FunctionSequence) GetFn() []*Function {
-	if x != nil {
-		return x.Fn
-	}
-	return nil
-}
-
-// FunctionHighorder takes a single unary function and lifts it to list level
-// or processes the enumeration without a base function
-// FunctionEnumerable can be used both on list element and enumeration stream
-type FunctionEnumerable struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Ty FunctionEnumerable_FunctionType `protobuf:"varint,1,opt,name=ty,proto3,enum=dbci.operation.FunctionEnumerable_FunctionType" json:"ty,omitempty"`
-	Fn *Function                       `protobuf:"bytes,2,opt,name=fn,proto3" json:"fn,omitempty"`
-}
-
-func (x *FunctionEnumerable) Reset() {
-	*x = FunctionEnumerable{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[12]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *FunctionEnumerable) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FunctionEnumerable) ProtoMessage() {}
-
-func (x *FunctionEnumerable) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[12]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FunctionEnumerable.ProtoReflect.Descriptor instead.
-func (*FunctionEnumerable) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{12}
-}
-
-func (x *FunctionEnumerable) GetTy() FunctionEnumerable_FunctionType {
-	if x != nil {
-		return x.Ty
-	}
-	return FunctionEnumerable_UNKNOWN
-}
-
-func (x *FunctionEnumerable) GetFn() *Function {
-	if x != nil {
-		return x.Fn
-	}
-	return nil
-}
-
-// FunctionSplit :: (a -> b) -> (a -> c) -> .. -> merge ((b, c, ..) -> d) -> (a -> d)
-// Use FunctionSplit to simulate Join operations
-type FunctionSplit struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Fn    []*Function `protobuf:"bytes,1,rep,name=fn,proto3" json:"fn,omitempty"`
-	Merge *Function   `protobuf:"bytes,2,opt,name=merge,proto3" json:"merge,omitempty"`
-}
-
-func (x *FunctionSplit) Reset() {
-	*x = FunctionSplit{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[13]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *FunctionSplit) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*FunctionSplit) ProtoMessage() {}
-
-func (x *FunctionSplit) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[13]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use FunctionSplit.ProtoReflect.Descriptor instead.
-func (*FunctionSplit) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *FunctionSplit) GetFn() []*Function {
-	if x != nil {
-		return x.Fn
-	}
-	return nil
-}
-
-func (x *FunctionSplit) GetMerge() *Function {
-	if x != nil {
-		return x.Merge
-	}
-	return nil
-}
-
-type Function struct {
+type FunctionSingle struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
 	// Types that are assignable to Fn:
-	//	*Function_Numeric
-	//	*Function_Effectful
-	//	*Function_SelectField
-	//	*Function_Sequence
-	//	*Function_Split
-	Fn isFunction_Fn `protobuf_oneof:"fn"`
+	//	*FunctionSingle_Numeric
+	//	*FunctionSingle_SelectField
+	//	*FunctionSingle_Boolean
+	Fn isFunctionSingle_Fn `protobuf_oneof:"fn"`
 }
 
-func (x *Function) Reset() {
-	*x = Function{}
+func (x *FunctionSingle) Reset() {
+	*x = FunctionSingle{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[14]
+		mi := &file_proto_operation_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *Function) String() string {
+func (x *FunctionSingle) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Function) ProtoMessage() {}
+func (*FunctionSingle) ProtoMessage() {}
 
-func (x *Function) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[14]
+func (x *FunctionSingle) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1066,113 +1527,89 @@ func (x *Function) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Function.ProtoReflect.Descriptor instead.
-func (*Function) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{14}
+// Deprecated: Use FunctionSingle.ProtoReflect.Descriptor instead.
+func (*FunctionSingle) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{18}
 }
 
-func (m *Function) GetFn() isFunction_Fn {
+func (m *FunctionSingle) GetFn() isFunctionSingle_Fn {
 	if m != nil {
 		return m.Fn
 	}
 	return nil
 }
 
-func (x *Function) GetNumeric() *FunctionNumeric {
-	if x, ok := x.GetFn().(*Function_Numeric); ok {
+func (x *FunctionSingle) GetNumeric() *FunctionNumeric {
+	if x, ok := x.GetFn().(*FunctionSingle_Numeric); ok {
 		return x.Numeric
 	}
 	return nil
 }
 
-func (x *Function) GetEffectful() *FunctionEffectful {
-	if x, ok := x.GetFn().(*Function_Effectful); ok {
-		return x.Effectful
-	}
-	return nil
-}
-
-func (x *Function) GetSelectField() *FunctionSelectField {
-	if x, ok := x.GetFn().(*Function_SelectField); ok {
+func (x *FunctionSingle) GetSelectField() *FunctionSelectField {
+	if x, ok := x.GetFn().(*FunctionSingle_SelectField); ok {
 		return x.SelectField
 	}
 	return nil
 }
 
-func (x *Function) GetSequence() *FunctionSequence {
-	if x, ok := x.GetFn().(*Function_Sequence); ok {
-		return x.Sequence
+func (x *FunctionSingle) GetBoolean() *FunctionBoolean {
+	if x, ok := x.GetFn().(*FunctionSingle_Boolean); ok {
+		return x.Boolean
 	}
 	return nil
 }
 
-func (x *Function) GetSplit() *FunctionSplit {
-	if x, ok := x.GetFn().(*Function_Split); ok {
-		return x.Split
-	}
-	return nil
+type isFunctionSingle_Fn interface {
+	isFunctionSingle_Fn()
 }
 
-type isFunction_Fn interface {
-	isFunction_Fn()
+type FunctionSingle_Numeric struct {
+	Numeric *FunctionNumeric `protobuf:"bytes,1,opt,name=numeric,proto3,oneof"` // Numeric -> Numeric
 }
 
-type Function_Numeric struct {
-	Numeric *FunctionNumeric `protobuf:"bytes,1,opt,name=numeric,proto3,oneof"`
+type FunctionSingle_SelectField struct {
+	SelectField *FunctionSelectField `protobuf:"bytes,2,opt,name=selectField,proto3,oneof"`
 }
 
-type Function_Effectful struct {
-	Effectful *FunctionEffectful `protobuf:"bytes,2,opt,name=effectful,proto3,oneof"`
+type FunctionSingle_Boolean struct {
+	Boolean *FunctionBoolean `protobuf:"bytes,3,opt,name=boolean,proto3,oneof"` // FunctionSplit split = 4;
 }
 
-type Function_SelectField struct {
-	SelectField *FunctionSelectField `protobuf:"bytes,3,opt,name=selectField,proto3,oneof"`
-}
+func (*FunctionSingle_Numeric) isFunctionSingle_Fn() {}
 
-type Function_Sequence struct {
-	Sequence *FunctionSequence `protobuf:"bytes,4,opt,name=sequence,proto3,oneof"`
-}
+func (*FunctionSingle_SelectField) isFunctionSingle_Fn() {}
 
-type Function_Split struct {
-	Split *FunctionSplit `protobuf:"bytes,5,opt,name=split,proto3,oneof"`
-}
+func (*FunctionSingle_Boolean) isFunctionSingle_Fn() {}
 
-func (*Function_Numeric) isFunction_Fn() {}
-
-func (*Function_Effectful) isFunction_Fn() {}
-
-func (*Function_SelectField) isFunction_Fn() {}
-
-func (*Function_Sequence) isFunction_Fn() {}
-
-func (*Function_Split) isFunction_Fn() {}
-
-type BytesState struct {
+type OperationSingle struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Key   []byte `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
-	Value []byte `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
+	Type      OperationSingle_OperationType `protobuf:"varint,1,opt,name=type,proto3,enum=dbci.operation.OperationSingle_OperationType" json:"type,omitempty"`
+	Account   string                        `protobuf:"bytes,2,opt,name=account,proto3" json:"account,omitempty"`
+	From      *SingleFrom                   `protobuf:"bytes,3,opt,name=from,proto3" json:"from,omitempty"`
+	Functions []*FunctionSingle             `protobuf:"bytes,4,rep,name=functions,proto3" json:"functions,omitempty"`
 }
 
-func (x *BytesState) Reset() {
-	*x = BytesState{}
+func (x *OperationSingle) Reset() {
+	*x = OperationSingle{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[15]
+		mi := &file_proto_operation_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *BytesState) String() string {
+func (x *OperationSingle) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BytesState) ProtoMessage() {}
+func (*OperationSingle) ProtoMessage() {}
 
-func (x *BytesState) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[15]
+func (x *OperationSingle) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1183,115 +1620,35 @@ func (x *BytesState) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BytesState.ProtoReflect.Descriptor instead.
-func (*BytesState) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{15}
+// Deprecated: Use OperationSingle.ProtoReflect.Descriptor instead.
+func (*OperationSingle) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{19}
 }
 
-func (x *BytesState) GetKey() []byte {
+func (x *OperationSingle) GetType() OperationSingle_OperationType {
 	if x != nil {
-		return x.Key
+		return x.Type
+	}
+	return OperationSingle_UNKNOWN
+}
+
+func (x *OperationSingle) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
+}
+
+func (x *OperationSingle) GetFrom() *SingleFrom {
+	if x != nil {
+		return x.From
 	}
 	return nil
 }
 
-func (x *BytesState) GetValue() []byte {
+func (x *OperationSingle) GetFunctions() []*FunctionSingle {
 	if x != nil {
-		return x.Value
-	}
-	return nil
-}
-
-type QueryEnumerableRequest struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Ops []*FunctionEnumerable `protobuf:"bytes,1,rep,name=ops,proto3" json:"ops,omitempty"`
-}
-
-func (x *QueryEnumerableRequest) Reset() {
-	*x = QueryEnumerableRequest{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[16]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *QueryEnumerableRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueryEnumerableRequest) ProtoMessage() {}
-
-func (x *QueryEnumerableRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[16]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use QueryEnumerableRequest.ProtoReflect.Descriptor instead.
-func (*QueryEnumerableRequest) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *QueryEnumerableRequest) GetOps() []*FunctionEnumerable {
-	if x != nil {
-		return x.Ops
-	}
-	return nil
-}
-
-type QueryEnumerableResponse struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	BytesEnumarable []*BytesState `protobuf:"bytes,1,rep,name=bytesEnumarable,proto3" json:"bytesEnumarable,omitempty"`
-}
-
-func (x *QueryEnumerableResponse) Reset() {
-	*x = QueryEnumerableResponse{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[17]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *QueryEnumerableResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*QueryEnumerableResponse) ProtoMessage() {}
-
-func (x *QueryEnumerableResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[17]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use QueryEnumerableResponse.ProtoReflect.Descriptor instead.
-func (*QueryEnumerableResponse) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *QueryEnumerableResponse) GetBytesEnumarable() []*BytesState {
-	if x != nil {
-		return x.BytesEnumarable
+		return x.Functions
 	}
 	return nil
 }
@@ -1301,13 +1658,13 @@ type QuerySingleRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Ops []*Function `protobuf:"bytes,1,rep,name=ops,proto3" json:"ops,omitempty"`
+	Ops []*OperationSingle `protobuf:"bytes,1,rep,name=ops,proto3" json:"ops,omitempty"`
 }
 
 func (x *QuerySingleRequest) Reset() {
 	*x = QuerySingleRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[18]
+		mi := &file_proto_operation_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1320,7 +1677,7 @@ func (x *QuerySingleRequest) String() string {
 func (*QuerySingleRequest) ProtoMessage() {}
 
 func (x *QuerySingleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[18]
+	mi := &file_proto_operation_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1333,10 +1690,10 @@ func (x *QuerySingleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySingleRequest.ProtoReflect.Descriptor instead.
 func (*QuerySingleRequest) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{18}
+	return file_proto_operation_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *QuerySingleRequest) GetOps() []*Function {
+func (x *QuerySingleRequest) GetOps() []*OperationSingle {
 	if x != nil {
 		return x.Ops
 	}
@@ -1348,13 +1705,13 @@ type QuerySingleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BytesSingle *BytesState `protobuf:"bytes,1,opt,name=bytesSingle,proto3" json:"bytesSingle,omitempty"`
+	Pair *BytesPair `protobuf:"bytes,1,opt,name=pair,proto3" json:"pair,omitempty"`
 }
 
 func (x *QuerySingleResponse) Reset() {
 	*x = QuerySingleResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_proto_operation_proto_msgTypes[19]
+		mi := &file_proto_operation_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1367,7 +1724,7 @@ func (x *QuerySingleResponse) String() string {
 func (*QuerySingleResponse) ProtoMessage() {}
 
 func (x *QuerySingleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_operation_proto_msgTypes[19]
+	mi := &file_proto_operation_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1380,14 +1737,61 @@ func (x *QuerySingleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySingleResponse.ProtoReflect.Descriptor instead.
 func (*QuerySingleResponse) Descriptor() ([]byte, []int) {
-	return file_proto_operation_proto_rawDescGZIP(), []int{19}
+	return file_proto_operation_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *QuerySingleResponse) GetBytesSingle() *BytesState {
+func (x *QuerySingleResponse) GetPair() *BytesPair {
 	if x != nil {
-		return x.BytesSingle
+		return x.Pair
 	}
 	return nil
+}
+
+type OperationAccount struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Type OperationAccount_OperationType `protobuf:"varint,1,opt,name=type,proto3,enum=dbci.operation.OperationAccount_OperationType" json:"type,omitempty"`
+}
+
+func (x *OperationAccount) Reset() {
+	*x = OperationAccount{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_operation_proto_msgTypes[22]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *OperationAccount) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OperationAccount) ProtoMessage() {}
+
+func (x *OperationAccount) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_operation_proto_msgTypes[22]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OperationAccount.ProtoReflect.Descriptor instead.
+func (*OperationAccount) Descriptor() ([]byte, []int) {
+	return file_proto_operation_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *OperationAccount) GetType() OperationAccount_OperationType {
+	if x != nil {
+		return x.Type
+	}
+	return OperationAccount_UNKNOWN
 }
 
 var File_proto_operation_proto protoreflect.FileDescriptor
@@ -1413,153 +1817,203 @@ var file_proto_operation_proto_rawDesc = []byte{
 	0x88, 0x01, 0x01, 0x12, 0x2f, 0x0a, 0x06, 0x61, 0x6d, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61,
 	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x52, 0x06, 0x61, 0x6d,
-	0x6f, 0x75, 0x6e, 0x74, 0x42, 0x05, 0x0a, 0x03, 0x5f, 0x69, 0x64, 0x22, 0x1e, 0x0a, 0x0a, 0x46,
-	0x72, 0x6f, 0x6d, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x6a, 0x0a, 0x0e, 0x46,
-	0x72, 0x6f, 0x6d, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x16, 0x0a,
-	0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0c, 0x52, 0x06, 0x70,
-	0x72, 0x65, 0x66, 0x69, 0x78, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0c, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02, 0x74, 0x6f, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x1c, 0x0a, 0x09, 0x61, 0x73, 0x63,
-	0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x61, 0x73,
-	0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x22, 0xb0, 0x03, 0x0a, 0x0f, 0x46, 0x75, 0x6e, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x12, 0x44, 0x0a, 0x08, 0x6f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x28, 0x2e,
-	0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46,
-	0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x2e, 0x4f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f,
-	0x72, 0x12, 0x26, 0x0a, 0x0d, 0x75, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61,
-	0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x48, 0x00, 0x52, 0x0d, 0x75, 0x69, 0x6e, 0x74,
-	0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x12, 0x24, 0x0a, 0x0c, 0x69, 0x6e, 0x74,
-	0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x48,
-	0x00, 0x52, 0x0c, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x12,
-	0x41, 0x0a, 0x0e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e,
-	0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36,
-	0x48, 0x00, 0x52, 0x0e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65, 0x72, 0x61,
-	0x6e, 0x64, 0x12, 0x3e, 0x0a, 0x0d, 0x49, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65, 0x72,
-	0x61, 0x6e, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x64, 0x62, 0x63, 0x69,
-	0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x49, 0x6e, 0x74, 0x32, 0x35,
-	0x36, 0x48, 0x00, 0x52, 0x0d, 0x49, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65, 0x72, 0x61,
-	0x6e, 0x64, 0x22, 0x7b, 0x0a, 0x08, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x0b,
-	0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x41,
-	0x44, 0x44, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x53, 0x55, 0x42, 0x10, 0x02, 0x12, 0x0b, 0x0a,
-	0x07, 0x53, 0x55, 0x42, 0x46, 0x52, 0x4f, 0x4d, 0x10, 0x03, 0x12, 0x07, 0x0a, 0x03, 0x4d, 0x55,
-	0x4c, 0x10, 0x04, 0x12, 0x07, 0x0a, 0x03, 0x44, 0x49, 0x56, 0x10, 0x05, 0x12, 0x06, 0x0a, 0x02,
-	0x4c, 0x54, 0x10, 0x06, 0x12, 0x07, 0x0a, 0x03, 0x4c, 0x54, 0x45, 0x10, 0x07, 0x12, 0x06, 0x0a,
-	0x02, 0x47, 0x54, 0x10, 0x08, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x54, 0x45, 0x10, 0x09, 0x12, 0x06,
-	0x0a, 0x02, 0x45, 0x51, 0x10, 0x0a, 0x12, 0x07, 0x0a, 0x03, 0x4e, 0x45, 0x51, 0x10, 0x0b, 0x42,
-	0x09, 0x0a, 0x07, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x22, 0x91, 0x01, 0x0a, 0x11, 0x46,
-	0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x66, 0x66, 0x65, 0x63, 0x74, 0x66, 0x75, 0x6c,
-	0x12, 0x3e, 0x0a, 0x02, 0x74, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x2e, 0x2e, 0x64,
-	0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75,
-	0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x66, 0x66, 0x65, 0x63, 0x74, 0x66, 0x75, 0x6c, 0x2e,
-	0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x02, 0x74, 0x79,
-	0x22, 0x3c, 0x0a, 0x0c, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65,
-	0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x0a, 0x0a,
-	0x06, 0x53, 0x45, 0x4c, 0x45, 0x43, 0x54, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x53, 0x45, 0x54,
-	0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x03, 0x22, 0x0d,
-	0x0a, 0x0b, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x74, 0x22, 0x10, 0x0a,
-	0x0e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x22,
-	0x55, 0x0a, 0x13, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63,
-	0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x4e,
-	0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x66, 0x69, 0x65,
-	0x6c, 0x64, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x66, 0x69, 0x65, 0x6c,
-	0x64, 0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x66, 0x69, 0x65,
-	0x6c, 0x64, 0x54, 0x79, 0x70, 0x65, 0x22, 0x3c, 0x0a, 0x10, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69,
-	0x6f, 0x6e, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x28, 0x0a, 0x02, 0x66, 0x6e,
-	0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70,
+	0x6f, 0x75, 0x6e, 0x74, 0x42, 0x05, 0x0a, 0x03, 0x5f, 0x69, 0x64, 0x22, 0x33, 0x0a, 0x09, 0x42,
+	0x79, 0x74, 0x65, 0x73, 0x50, 0x61, 0x69, 0x72, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
+	0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x22, 0x1e, 0x0a, 0x08, 0x46, 0x72, 0x6f, 0x6d, 0x4b, 0x65, 0x79, 0x73, 0x12, 0x12, 0x0a, 0x04,
+	0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73,
+	0x22, 0x68, 0x0a, 0x0c, 0x46, 0x72, 0x6f, 0x6d, 0x49, 0x74, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72,
+	0x12, 0x16, 0x0a, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09,
+	0x52, 0x06, 0x70, 0x72, 0x65, 0x66, 0x69, 0x78, 0x12, 0x12, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d,
+	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x0e, 0x0a, 0x02,
+	0x74, 0x6f, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x74, 0x6f, 0x12, 0x1c, 0x0a, 0x09,
+	0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x09, 0x61, 0x73, 0x63, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x22, 0x84, 0x01, 0x0a, 0x0e, 0x45,
+	0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x12, 0x2e, 0x0a,
+	0x04, 0x6b, 0x65, 0x79, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x62,
+	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x72, 0x6f,
+	0x6d, 0x4b, 0x65, 0x79, 0x73, 0x48, 0x00, 0x52, 0x04, 0x6b, 0x65, 0x79, 0x73, 0x12, 0x3a, 0x0a,
+	0x08, 0x69, 0x74, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1c, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x46, 0x72, 0x6f, 0x6d, 0x49, 0x74, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x48, 0x00, 0x52,
+	0x08, 0x69, 0x74, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x42, 0x06, 0x0a, 0x04, 0x66, 0x72, 0x6f,
+	0x6d, 0x22, 0xe2, 0x02, 0x0a, 0x12, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e,
+	0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x43, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x2f, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70,
 	0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x52, 0x02, 0x66, 0x6e, 0x22, 0xb1, 0x02, 0x0a, 0x12, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x3f, 0x0a, 0x02, 0x74,
-	0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x2f, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f,
-	0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2e, 0x46, 0x75, 0x6e, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x02, 0x74, 0x79, 0x12, 0x28, 0x0a, 0x02,
-	0x66, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e,
-	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69,
-	0x6f, 0x6e, 0x52, 0x02, 0x66, 0x6e, 0x22, 0xaf, 0x01, 0x0a, 0x0c, 0x46, 0x75, 0x6e, 0x63, 0x74,
-	0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f,
-	0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x4d, 0x41, 0x50, 0x10, 0x01, 0x12, 0x0a, 0x0a,
-	0x06, 0x46, 0x49, 0x4c, 0x54, 0x45, 0x52, 0x10, 0x02, 0x12, 0x08, 0x0a, 0x04, 0x46, 0x4f, 0x4c,
-	0x44, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04, 0x54, 0x41, 0x4b, 0x45, 0x10, 0x04, 0x12, 0x0d, 0x0a,
-	0x09, 0x54, 0x41, 0x4b, 0x45, 0x57, 0x48, 0x49, 0x4c, 0x45, 0x10, 0x05, 0x12, 0x0d, 0x0a, 0x09,
-	0x54, 0x41, 0x4b, 0x45, 0x46, 0x49, 0x52, 0x53, 0x54, 0x10, 0x06, 0x12, 0x0c, 0x0a, 0x08, 0x54,
-	0x41, 0x4b, 0x45, 0x4c, 0x41, 0x53, 0x54, 0x10, 0x07, 0x12, 0x08, 0x0a, 0x04, 0x44, 0x52, 0x4f,
-	0x50, 0x10, 0x08, 0x12, 0x0d, 0x0a, 0x09, 0x44, 0x52, 0x4f, 0x50, 0x57, 0x48, 0x49, 0x4c, 0x45,
-	0x10, 0x09, 0x12, 0x0b, 0x0a, 0x07, 0x46, 0x4f, 0x52, 0x45, 0x41, 0x43, 0x48, 0x10, 0x0a, 0x12,
-	0x0a, 0x0a, 0x06, 0x43, 0x4f, 0x4e, 0x43, 0x41, 0x54, 0x10, 0x0b, 0x12, 0x0b, 0x0a, 0x07, 0x46,
-	0x4c, 0x41, 0x54, 0x4d, 0x41, 0x50, 0x10, 0x0c, 0x22, 0x69, 0x0a, 0x0d, 0x46, 0x75, 0x6e, 0x63,
-	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x12, 0x28, 0x0a, 0x02, 0x66, 0x6e, 0x18,
-	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65,
-	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52,
-	0x02, 0x66, 0x6e, 0x12, 0x2e, 0x0a, 0x05, 0x6d, 0x65, 0x72, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x18, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x05, 0x6d, 0x65,
-	0x72, 0x67, 0x65, 0x22, 0xd0, 0x02, 0x0a, 0x08, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e,
-	0x12, 0x3b, 0x0a, 0x07, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0b, 0x32, 0x1f, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72,
-	0x69, 0x63, 0x48, 0x00, 0x52, 0x07, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x12, 0x41, 0x0a,
-	0x09, 0x65, 0x66, 0x66, 0x65, 0x63, 0x74, 0x66, 0x75, 0x6c, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b,
-	0x32, 0x21, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x66, 0x66, 0x65, 0x63, 0x74,
-	0x66, 0x75, 0x6c, 0x48, 0x00, 0x52, 0x09, 0x65, 0x66, 0x66, 0x65, 0x63, 0x74, 0x66, 0x75, 0x6c,
-	0x12, 0x47, 0x0a, 0x0b, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x18,
-	0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65,
-	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53,
-	0x65, 0x6c, 0x65, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x48, 0x00, 0x52, 0x0b, 0x73, 0x65,
-	0x6c, 0x65, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x3e, 0x0a, 0x08, 0x73, 0x65, 0x71,
-	0x75, 0x65, 0x6e, 0x63, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x20, 0x2e, 0x64, 0x62,
+	0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x3a, 0x0a,
+	0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1e, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52,
+	0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xca, 0x01, 0x0a, 0x0c, 0x46, 0x75,
+	0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e,
+	0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x4d, 0x41, 0x50, 0x10, 0x01,
+	0x12, 0x0a, 0x0a, 0x06, 0x46, 0x49, 0x4c, 0x54, 0x45, 0x52, 0x10, 0x02, 0x12, 0x08, 0x0a, 0x04,
+	0x46, 0x4f, 0x4c, 0x44, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04, 0x54, 0x41, 0x4b, 0x45, 0x10, 0x04,
+	0x12, 0x0d, 0x0a, 0x09, 0x54, 0x41, 0x4b, 0x45, 0x57, 0x48, 0x49, 0x4c, 0x45, 0x10, 0x05, 0x12,
+	0x0d, 0x0a, 0x09, 0x54, 0x41, 0x4b, 0x45, 0x46, 0x49, 0x52, 0x53, 0x54, 0x10, 0x06, 0x12, 0x0c,
+	0x0a, 0x08, 0x54, 0x41, 0x4b, 0x45, 0x4c, 0x41, 0x53, 0x54, 0x10, 0x07, 0x12, 0x08, 0x0a, 0x04,
+	0x44, 0x52, 0x4f, 0x50, 0x10, 0x08, 0x12, 0x0d, 0x0a, 0x09, 0x44, 0x52, 0x4f, 0x50, 0x57, 0x48,
+	0x49, 0x4c, 0x45, 0x10, 0x09, 0x12, 0x0b, 0x0a, 0x07, 0x46, 0x4f, 0x52, 0x45, 0x41, 0x43, 0x48,
+	0x10, 0x0a, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x4f, 0x4e, 0x43, 0x41, 0x54, 0x10, 0x0b, 0x12, 0x0b,
+	0x0a, 0x07, 0x46, 0x4c, 0x41, 0x54, 0x4d, 0x41, 0x50, 0x10, 0x0c, 0x12, 0x0a, 0x0a, 0x06, 0x53,
+	0x45, 0x54, 0x41, 0x4c, 0x4c, 0x10, 0x0d, 0x12, 0x0d, 0x0a, 0x09, 0x44, 0x45, 0x4c, 0x45, 0x54,
+	0x45, 0x41, 0x4c, 0x4c, 0x10, 0x0e, 0x22, 0x9b, 0x02, 0x0a, 0x13, 0x4f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x45,
+	0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x31, 0x2e, 0x64,
+	0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x4f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c,
+	0x65, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52,
+	0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x32, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x46,
+	0x72, 0x6f, 0x6d, 0x52, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x12, 0x3e, 0x0a, 0x08, 0x66, 0x75, 0x6e,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x64, 0x62,
 	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e,
-	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x48, 0x00, 0x52,
-	0x08, 0x73, 0x65, 0x71, 0x75, 0x65, 0x6e, 0x63, 0x65, 0x12, 0x35, 0x0a, 0x05, 0x73, 0x70, 0x6c,
-	0x69, 0x74, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1d, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e,
+	0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52,
+	0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0x49, 0x0a, 0x0d, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e,
+	0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x45, 0x4c, 0x45, 0x43,
+	0x54, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x53, 0x45, 0x54, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06,
+	0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x03, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45, 0x41,
+	0x54, 0x45, 0x10, 0x04, 0x22, 0x4f, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75,
+	0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x35,
+	0x0a, 0x03, 0x6f, 0x70, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x64, 0x62,
+	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65,
+	0x52, 0x03, 0x6f, 0x70, 0x73, 0x22, 0x4a, 0x0a, 0x17, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e,
+	0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x12, 0x2f, 0x0a, 0x05, 0x70, 0x61, 0x69, 0x72, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x19, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x42, 0x79, 0x74, 0x65, 0x73, 0x50, 0x61, 0x69, 0x72, 0x52, 0x05, 0x70, 0x61, 0x69, 0x72,
+	0x73, 0x22, 0x1b, 0x0a, 0x07, 0x46, 0x72, 0x6f, 0x6d, 0x4b, 0x65, 0x79, 0x12, 0x10, 0x0a, 0x03,
+	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x22, 0x36,
+	0x0a, 0x0c, 0x46, 0x72, 0x6f, 0x6d, 0x43, 0x6f, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x74, 0x12, 0x10,
+	0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79,
+	0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x52,
+	0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x41, 0x0a, 0x0a, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65,
+	0x46, 0x72, 0x6f, 0x6d, 0x12, 0x2b, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0b, 0x32, 0x17, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x2e, 0x46, 0x72, 0x6f, 0x6d, 0x4b, 0x65, 0x79, 0x48, 0x00, 0x52, 0x03, 0x6b, 0x65,
+	0x79, 0x42, 0x06, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x22, 0xb0, 0x03, 0x0a, 0x0f, 0x46, 0x75,
+	0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x12, 0x44, 0x0a,
+	0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32,
+	0x28, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63,
+	0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x6f, 0x72, 0x12, 0x26, 0x0a, 0x0d, 0x75, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x6e, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x48, 0x00, 0x52, 0x0d, 0x75, 0x69,
+	0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x12, 0x24, 0x0a, 0x0c, 0x69,
+	0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28,
+	0x03, 0x48, 0x00, 0x52, 0x0c, 0x69, 0x6e, 0x74, 0x36, 0x34, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x6e,
+	0x64, 0x12, 0x41, 0x0a, 0x0e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65, 0x72,
+	0x61, 0x6e, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x17, 0x2e, 0x64, 0x62, 0x63, 0x69,
+	0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x55, 0x69, 0x6e, 0x74, 0x32,
+	0x35, 0x36, 0x48, 0x00, 0x52, 0x0e, 0x55, 0x69, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x6e, 0x64, 0x12, 0x3e, 0x0a, 0x0d, 0x49, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70,
+	0x65, 0x72, 0x61, 0x6e, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x64, 0x62,
+	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x49, 0x6e, 0x74,
+	0x32, 0x35, 0x36, 0x48, 0x00, 0x52, 0x0d, 0x49, 0x6e, 0x74, 0x32, 0x35, 0x36, 0x4f, 0x70, 0x65,
+	0x72, 0x61, 0x6e, 0x64, 0x22, 0x7b, 0x0a, 0x08, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72,
+	0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a,
+	0x03, 0x41, 0x44, 0x44, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x53, 0x55, 0x42, 0x10, 0x02, 0x12,
+	0x0b, 0x0a, 0x07, 0x53, 0x55, 0x42, 0x46, 0x52, 0x4f, 0x4d, 0x10, 0x03, 0x12, 0x07, 0x0a, 0x03,
+	0x4d, 0x55, 0x4c, 0x10, 0x04, 0x12, 0x07, 0x0a, 0x03, 0x44, 0x49, 0x56, 0x10, 0x05, 0x12, 0x06,
+	0x0a, 0x02, 0x4c, 0x54, 0x10, 0x06, 0x12, 0x07, 0x0a, 0x03, 0x4c, 0x54, 0x45, 0x10, 0x07, 0x12,
+	0x06, 0x0a, 0x02, 0x47, 0x54, 0x10, 0x08, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x54, 0x45, 0x10, 0x09,
+	0x12, 0x06, 0x0a, 0x02, 0x45, 0x51, 0x10, 0x0a, 0x12, 0x07, 0x0a, 0x03, 0x4e, 0x45, 0x51, 0x10,
+	0x0b, 0x42, 0x09, 0x0a, 0x07, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x6e, 0x64, 0x22, 0xcf, 0x01, 0x0a,
+	0x0f, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e,
+	0x12, 0x44, 0x0a, 0x08, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x28, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6f, 0x6f, 0x6c,
+	0x65, 0x61, 0x6e, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x08, 0x6f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x3a, 0x0a, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e,
 	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69,
-	0x6f, 0x6e, 0x53, 0x70, 0x6c, 0x69, 0x74, 0x48, 0x00, 0x52, 0x05, 0x73, 0x70, 0x6c, 0x69, 0x74,
-	0x42, 0x04, 0x0a, 0x02, 0x66, 0x6e, 0x22, 0x34, 0x0a, 0x0a, 0x42, 0x79, 0x74, 0x65, 0x73, 0x53,
-	0x74, 0x61, 0x74, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x0c, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18,
-	0x02, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x4e, 0x0a, 0x16,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x34, 0x0a, 0x03, 0x6f, 0x70, 0x73, 0x18, 0x01, 0x20,
-	0x03, 0x28, 0x0b, 0x32, 0x22, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x45, 0x6e, 0x75,
-	0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x03, 0x6f, 0x70, 0x73, 0x22, 0x5f, 0x0a, 0x17,
-	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x44, 0x0a, 0x0f, 0x62, 0x79, 0x74, 0x65, 0x73,
-	0x45, 0x6e, 0x75, 0x6d, 0x61, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x6f, 0x6e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x08, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x22, 0x3a, 0x0a, 0x08, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x0b,
+	0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x41,
+	0x4e, 0x44, 0x10, 0x01, 0x12, 0x06, 0x0a, 0x02, 0x4f, 0x52, 0x10, 0x02, 0x12, 0x07, 0x0a, 0x03,
+	0x58, 0x4f, 0x52, 0x10, 0x03, 0x12, 0x07, 0x0a, 0x03, 0x4e, 0x4f, 0x54, 0x10, 0x04, 0x22, 0x55,
+	0x0a, 0x13, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74,
+	0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x4e, 0x75,
+	0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0b, 0x66, 0x69, 0x65, 0x6c,
+	0x64, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x1c, 0x0a, 0x09, 0x66, 0x69, 0x65, 0x6c, 0x64,
+	0x54, 0x79, 0x70, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x09, 0x66, 0x69, 0x65, 0x6c,
+	0x64, 0x54, 0x79, 0x70, 0x65, 0x22, 0xd9, 0x01, 0x0a, 0x0e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69,
+	0x6f, 0x6e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x3b, 0x0a, 0x07, 0x6e, 0x75, 0x6d, 0x65,
+	0x72, 0x69, 0x63, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1f, 0x2e, 0x64, 0x62, 0x63, 0x69,
+	0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74,
+	0x69, 0x6f, 0x6e, 0x4e, 0x75, 0x6d, 0x65, 0x72, 0x69, 0x63, 0x48, 0x00, 0x52, 0x07, 0x6e, 0x75,
+	0x6d, 0x65, 0x72, 0x69, 0x63, 0x12, 0x47, 0x0a, 0x0b, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x46,
+	0x69, 0x65, 0x6c, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x64, 0x62, 0x63,
+	0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63,
+	0x74, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x48,
+	0x00, 0x52, 0x0b, 0x73, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x12, 0x3b,
+	0x0a, 0x07, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x1f, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x42, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e,
+	0x48, 0x00, 0x52, 0x07, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x42, 0x04, 0x0a, 0x02, 0x66,
+	0x6e, 0x22, 0xa7, 0x02, 0x0a, 0x0f, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x41, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0e, 0x32, 0x2d, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69,
+	0x6e, 0x67, 0x6c, 0x65, 0x2e, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79,
+	0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x61, 0x63, 0x63, 0x6f,
+	0x75, 0x6e, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x61, 0x63, 0x63, 0x6f, 0x75,
+	0x6e, 0x74, 0x12, 0x2e, 0x0a, 0x04, 0x66, 0x72, 0x6f, 0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b,
 	0x32, 0x1a, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x2e, 0x42, 0x79, 0x74, 0x65, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x0f, 0x62, 0x79,
-	0x74, 0x65, 0x73, 0x45, 0x6e, 0x75, 0x6d, 0x61, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x22, 0x40, 0x0a,
-	0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x12, 0x2a, 0x0a, 0x03, 0x6f, 0x70, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
-	0x32, 0x18, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x03, 0x6f, 0x70, 0x73, 0x22,
-	0x53, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3c, 0x0a, 0x0b, 0x62, 0x79, 0x74, 0x65, 0x73, 0x53,
-	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x64, 0x62,
-	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x42, 0x79, 0x74,
-	0x65, 0x73, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x0b, 0x62, 0x79, 0x74, 0x65, 0x73, 0x53, 0x69,
-	0x6e, 0x67, 0x6c, 0x65, 0x32, 0x7c, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75,
-	0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x62,
-	0x0a, 0x0f, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c,
-	0x65, 0x12, 0x26, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62,
-	0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x64, 0x62, 0x63, 0x69,
-	0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79,
-	0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x32, 0x6c, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c,
-	0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x56, 0x0a, 0x0b, 0x51, 0x75, 0x65, 0x72,
-	0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x12, 0x22, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f,
-	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69,
-	0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x64, 0x62,
-	0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x42, 0x29, 0x5a, 0x27, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6d,
-	0x63, 0x6f, 0x6e, 0x63, 0x61, 0x74, 0x2f, 0x64, 0x62, 0x63, 0x69, 0x2f, 0x6f, 0x70, 0x65, 0x72,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x6e, 0x2e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x52, 0x04, 0x66, 0x72,
+	0x6f, 0x6d, 0x12, 0x3c, 0x0a, 0x09, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x18,
+	0x04, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1e, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65,
+	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x46, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x09, 0x66, 0x75, 0x6e, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x73,
+	0x22, 0x49, 0x0a, 0x0d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10, 0x00, 0x12, 0x0a,
+	0x0a, 0x06, 0x53, 0x45, 0x4c, 0x45, 0x43, 0x54, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x53, 0x45,
+	0x54, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x03, 0x12,
+	0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45, 0x41, 0x54, 0x45, 0x10, 0x04, 0x22, 0x47, 0x0a, 0x12, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x12, 0x31, 0x0a, 0x03, 0x6f, 0x70, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1f,
+	0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e,
+	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52,
+	0x03, 0x6f, 0x70, 0x73, 0x22, 0x44, 0x0a, 0x13, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e,
+	0x67, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2d, 0x0a, 0x04, 0x70,
+	0x61, 0x69, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x19, 0x2e, 0x64, 0x62, 0x63, 0x69,
+	0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x42, 0x79, 0x74, 0x65, 0x73,
+	0x50, 0x61, 0x69, 0x72, 0x52, 0x04, 0x70, 0x61, 0x69, 0x72, 0x22, 0xb4, 0x01, 0x0a, 0x10, 0x4f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x12,
+	0x42, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x2e, 0x2e,
+	0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x4f,
+	0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x41, 0x63, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x2e,
+	0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74,
+	0x79, 0x70, 0x65, 0x22, 0x5c, 0x0a, 0x0d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x0b, 0x0a, 0x07, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57, 0x4e, 0x10,
+	0x00, 0x12, 0x0a, 0x0a, 0x06, 0x43, 0x52, 0x45, 0x41, 0x54, 0x45, 0x10, 0x01, 0x12, 0x0c, 0x0a,
+	0x08, 0x44, 0x45, 0x53, 0x54, 0x52, 0x55, 0x43, 0x54, 0x10, 0x02, 0x12, 0x0e, 0x0a, 0x0a, 0x53,
+	0x55, 0x42, 0x41, 0x43, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04, 0x4c,
+	0x4f, 0x43, 0x4b, 0x10, 0x04, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x4e, 0x4c, 0x4f, 0x43, 0x4b, 0x10,
+	0x05, 0x32, 0x7c, 0x0a, 0x16, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72,
+	0x61, 0x62, 0x6c, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x62, 0x0a, 0x0f, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x26,
+	0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e,
+	0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75, 0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x27, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70,
+	0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x45, 0x6e, 0x75,
+	0x6d, 0x65, 0x72, 0x61, 0x62, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x32,
+	0x6c, 0x0a, 0x12, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c, 0x65, 0x53, 0x65,
+	0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x56, 0x0a, 0x0b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69,
+	0x6e, 0x67, 0x6c, 0x65, 0x12, 0x22, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e, 0x6f, 0x70, 0x65, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53, 0x69, 0x6e, 0x67, 0x6c,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x64, 0x62, 0x63, 0x69, 0x2e,
+	0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x53,
+	0x69, 0x6e, 0x67, 0x6c, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x29, 0x5a,
+	0x27, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x6d, 0x63, 0x6f, 0x6e,
+	0x63, 0x61, 0x74, 0x2f, 0x64, 0x62, 0x63, 0x69, 0x2f, 0x6f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69,
+	0x6f, 0x6e, 0x2f, 0x74, 0x79, 0x70, 0x65, 0x73, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1574,64 +2028,76 @@ func file_proto_operation_proto_rawDescGZIP() []byte {
 	return file_proto_operation_proto_rawDescData
 }
 
-var file_proto_operation_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_proto_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
+var file_proto_operation_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
+var file_proto_operation_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_proto_operation_proto_goTypes = []interface{}{
-	(FunctionNumeric_Operator)(0),        // 0: dbci.operation.FunctionNumeric.Operator
-	(FunctionEffectful_FunctionType)(0),  // 1: dbci.operation.FunctionEffectful.FunctionType
-	(FunctionEnumerable_FunctionType)(0), // 2: dbci.operation.FunctionEnumerable.FunctionType
-	(*Uint256)(nil),                      // 3: dbci.operation.Uint256
-	(*Int256)(nil),                       // 4: dbci.operation.Int256
-	(*Dec256)(nil),                       // 5: dbci.operation.Dec256
-	(*Asset)(nil),                        // 6: dbci.operation.Asset
-	(*FromSingle)(nil),                   // 7: dbci.operation.FromSingle
-	(*FromEnumerable)(nil),               // 8: dbci.operation.FromEnumerable
-	(*FunctionNumeric)(nil),              // 9: dbci.operation.FunctionNumeric
-	(*FunctionEffectful)(nil),            // 10: dbci.operation.FunctionEffectful
-	(*FunctionSet)(nil),                  // 11: dbci.operation.FunctionSet
-	(*FunctionDelete)(nil),               // 12: dbci.operation.FunctionDelete
-	(*FunctionSelectField)(nil),          // 13: dbci.operation.FunctionSelectField
-	(*FunctionSequence)(nil),             // 14: dbci.operation.FunctionSequence
-	(*FunctionEnumerable)(nil),           // 15: dbci.operation.FunctionEnumerable
-	(*FunctionSplit)(nil),                // 16: dbci.operation.FunctionSplit
-	(*Function)(nil),                     // 17: dbci.operation.Function
-	(*BytesState)(nil),                   // 18: dbci.operation.BytesState
-	(*QueryEnumerableRequest)(nil),       // 19: dbci.operation.QueryEnumerableRequest
-	(*QueryEnumerableResponse)(nil),      // 20: dbci.operation.QueryEnumerableResponse
-	(*QuerySingleRequest)(nil),           // 21: dbci.operation.QuerySingleRequest
-	(*QuerySingleResponse)(nil),          // 22: dbci.operation.QuerySingleResponse
+	(FunctionEnumerable_FunctionType)(0),   // 0: dbci.operation.FunctionEnumerable.FunctionType
+	(OperationEnumerable_OperationType)(0), // 1: dbci.operation.OperationEnumerable.OperationType
+	(FunctionNumeric_Operator)(0),          // 2: dbci.operation.FunctionNumeric.Operator
+	(FunctionBoolean_Operator)(0),          // 3: dbci.operation.FunctionBoolean.Operator
+	(OperationSingle_OperationType)(0),     // 4: dbci.operation.OperationSingle.OperationType
+	(OperationAccount_OperationType)(0),    // 5: dbci.operation.OperationAccount.OperationType
+	(*Uint256)(nil),                        // 6: dbci.operation.Uint256
+	(*Int256)(nil),                         // 7: dbci.operation.Int256
+	(*Dec256)(nil),                         // 8: dbci.operation.Dec256
+	(*Asset)(nil),                          // 9: dbci.operation.Asset
+	(*BytesPair)(nil),                      // 10: dbci.operation.BytesPair
+	(*FromKeys)(nil),                       // 11: dbci.operation.FromKeys
+	(*FromIterator)(nil),                   // 12: dbci.operation.FromIterator
+	(*EnumerableFrom)(nil),                 // 13: dbci.operation.EnumerableFrom
+	(*FunctionEnumerable)(nil),             // 14: dbci.operation.FunctionEnumerable
+	(*OperationEnumerable)(nil),            // 15: dbci.operation.OperationEnumerable
+	(*QueryEnumerableRequest)(nil),         // 16: dbci.operation.QueryEnumerableRequest
+	(*QueryEnumerableResponse)(nil),        // 17: dbci.operation.QueryEnumerableResponse
+	(*FromKey)(nil),                        // 18: dbci.operation.FromKey
+	(*FromConstant)(nil),                   // 19: dbci.operation.FromConstant
+	(*SingleFrom)(nil),                     // 20: dbci.operation.SingleFrom
+	(*FunctionNumeric)(nil),                // 21: dbci.operation.FunctionNumeric
+	(*FunctionBoolean)(nil),                // 22: dbci.operation.FunctionBoolean
+	(*FunctionSelectField)(nil),            // 23: dbci.operation.FunctionSelectField
+	(*FunctionSingle)(nil),                 // 24: dbci.operation.FunctionSingle
+	(*OperationSingle)(nil),                // 25: dbci.operation.OperationSingle
+	(*QuerySingleRequest)(nil),             // 26: dbci.operation.QuerySingleRequest
+	(*QuerySingleResponse)(nil),            // 27: dbci.operation.QuerySingleResponse
+	(*OperationAccount)(nil),               // 28: dbci.operation.OperationAccount
 }
 var file_proto_operation_proto_depIdxs = []int32{
-	3,  // 0: dbci.operation.Dec256.significand:type_name -> dbci.operation.Uint256
-	3,  // 1: dbci.operation.Asset.id:type_name -> dbci.operation.Uint256
-	3,  // 2: dbci.operation.Asset.amount:type_name -> dbci.operation.Uint256
-	0,  // 3: dbci.operation.FunctionNumeric.operator:type_name -> dbci.operation.FunctionNumeric.Operator
-	3,  // 4: dbci.operation.FunctionNumeric.Uint256Operand:type_name -> dbci.operation.Uint256
-	4,  // 5: dbci.operation.FunctionNumeric.Int256Operand:type_name -> dbci.operation.Int256
-	1,  // 6: dbci.operation.FunctionEffectful.ty:type_name -> dbci.operation.FunctionEffectful.FunctionType
-	17, // 7: dbci.operation.FunctionSequence.fn:type_name -> dbci.operation.Function
-	2,  // 8: dbci.operation.FunctionEnumerable.ty:type_name -> dbci.operation.FunctionEnumerable.FunctionType
-	17, // 9: dbci.operation.FunctionEnumerable.fn:type_name -> dbci.operation.Function
-	17, // 10: dbci.operation.FunctionSplit.fn:type_name -> dbci.operation.Function
-	17, // 11: dbci.operation.FunctionSplit.merge:type_name -> dbci.operation.Function
-	9,  // 12: dbci.operation.Function.numeric:type_name -> dbci.operation.FunctionNumeric
-	10, // 13: dbci.operation.Function.effectful:type_name -> dbci.operation.FunctionEffectful
-	13, // 14: dbci.operation.Function.selectField:type_name -> dbci.operation.FunctionSelectField
-	14, // 15: dbci.operation.Function.sequence:type_name -> dbci.operation.FunctionSequence
-	16, // 16: dbci.operation.Function.split:type_name -> dbci.operation.FunctionSplit
-	15, // 17: dbci.operation.QueryEnumerableRequest.ops:type_name -> dbci.operation.FunctionEnumerable
-	18, // 18: dbci.operation.QueryEnumerableResponse.bytesEnumarable:type_name -> dbci.operation.BytesState
-	17, // 19: dbci.operation.QuerySingleRequest.ops:type_name -> dbci.operation.Function
-	18, // 20: dbci.operation.QuerySingleResponse.bytesSingle:type_name -> dbci.operation.BytesState
-	19, // 21: dbci.operation.QueryEnumerableService.QueryEnumerable:input_type -> dbci.operation.QueryEnumerableRequest
-	21, // 22: dbci.operation.QuerySingleService.QuerySingle:input_type -> dbci.operation.QuerySingleRequest
-	20, // 23: dbci.operation.QueryEnumerableService.QueryEnumerable:output_type -> dbci.operation.QueryEnumerableResponse
-	22, // 24: dbci.operation.QuerySingleService.QuerySingle:output_type -> dbci.operation.QuerySingleResponse
-	23, // [23:25] is the sub-list for method output_type
-	21, // [21:23] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	6,  // 0: dbci.operation.Dec256.significand:type_name -> dbci.operation.Uint256
+	6,  // 1: dbci.operation.Asset.id:type_name -> dbci.operation.Uint256
+	6,  // 2: dbci.operation.Asset.amount:type_name -> dbci.operation.Uint256
+	11, // 3: dbci.operation.EnumerableFrom.keys:type_name -> dbci.operation.FromKeys
+	12, // 4: dbci.operation.EnumerableFrom.iterator:type_name -> dbci.operation.FromIterator
+	0,  // 5: dbci.operation.FunctionEnumerable.type:type_name -> dbci.operation.FunctionEnumerable.FunctionType
+	24, // 6: dbci.operation.FunctionEnumerable.function:type_name -> dbci.operation.FunctionSingle
+	1,  // 7: dbci.operation.OperationEnumerable.type:type_name -> dbci.operation.OperationEnumerable.OperationType
+	13, // 8: dbci.operation.OperationEnumerable.from:type_name -> dbci.operation.EnumerableFrom
+	14, // 9: dbci.operation.OperationEnumerable.function:type_name -> dbci.operation.FunctionEnumerable
+	15, // 10: dbci.operation.QueryEnumerableRequest.ops:type_name -> dbci.operation.OperationEnumerable
+	10, // 11: dbci.operation.QueryEnumerableResponse.pairs:type_name -> dbci.operation.BytesPair
+	18, // 12: dbci.operation.SingleFrom.key:type_name -> dbci.operation.FromKey
+	2,  // 13: dbci.operation.FunctionNumeric.operator:type_name -> dbci.operation.FunctionNumeric.Operator
+	6,  // 14: dbci.operation.FunctionNumeric.Uint256Operand:type_name -> dbci.operation.Uint256
+	7,  // 15: dbci.operation.FunctionNumeric.Int256Operand:type_name -> dbci.operation.Int256
+	3,  // 16: dbci.operation.FunctionBoolean.operator:type_name -> dbci.operation.FunctionBoolean.Operator
+	24, // 17: dbci.operation.FunctionBoolean.function:type_name -> dbci.operation.FunctionSingle
+	21, // 18: dbci.operation.FunctionSingle.numeric:type_name -> dbci.operation.FunctionNumeric
+	23, // 19: dbci.operation.FunctionSingle.selectField:type_name -> dbci.operation.FunctionSelectField
+	22, // 20: dbci.operation.FunctionSingle.boolean:type_name -> dbci.operation.FunctionBoolean
+	4,  // 21: dbci.operation.OperationSingle.type:type_name -> dbci.operation.OperationSingle.OperationType
+	20, // 22: dbci.operation.OperationSingle.from:type_name -> dbci.operation.SingleFrom
+	24, // 23: dbci.operation.OperationSingle.functions:type_name -> dbci.operation.FunctionSingle
+	25, // 24: dbci.operation.QuerySingleRequest.ops:type_name -> dbci.operation.OperationSingle
+	10, // 25: dbci.operation.QuerySingleResponse.pair:type_name -> dbci.operation.BytesPair
+	5,  // 26: dbci.operation.OperationAccount.type:type_name -> dbci.operation.OperationAccount.OperationType
+	16, // 27: dbci.operation.QueryEnumerableService.QueryEnumerable:input_type -> dbci.operation.QueryEnumerableRequest
+	26, // 28: dbci.operation.QuerySingleService.QuerySingle:input_type -> dbci.operation.QuerySingleRequest
+	17, // 29: dbci.operation.QueryEnumerableService.QueryEnumerable:output_type -> dbci.operation.QueryEnumerableResponse
+	27, // 30: dbci.operation.QuerySingleService.QuerySingle:output_type -> dbci.operation.QuerySingleResponse
+	29, // [29:31] is the sub-list for method output_type
+	27, // [27:29] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_proto_operation_proto_init() }
@@ -1689,7 +2155,7 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FromSingle); i {
+			switch v := v.(*BytesPair); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1701,7 +2167,7 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FromEnumerable); i {
+			switch v := v.(*FromKeys); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1713,7 +2179,7 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionNumeric); i {
+			switch v := v.(*FromIterator); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1725,7 +2191,7 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionEffectful); i {
+			switch v := v.(*EnumerableFrom); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1737,54 +2203,6 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionSet); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionDelete); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionSelectField); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionSequence); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FunctionEnumerable); i {
 			case 0:
 				return &v.state
@@ -1796,8 +2214,8 @@ func file_proto_operation_proto_init() {
 				return nil
 			}
 		}
-		file_proto_operation_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*FunctionSplit); i {
+		file_proto_operation_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OperationEnumerable); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1808,31 +2226,7 @@ func file_proto_operation_proto_init() {
 				return nil
 			}
 		}
-		file_proto_operation_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Function); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BytesState); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_proto_operation_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_operation_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryEnumerableRequest); i {
 			case 0:
 				return &v.state
@@ -1844,7 +2238,7 @@ func file_proto_operation_proto_init() {
 				return nil
 			}
 		}
-		file_proto_operation_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+		file_proto_operation_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryEnumerableResponse); i {
 			case 0:
 				return &v.state
@@ -1856,8 +2250,80 @@ func file_proto_operation_proto_init() {
 				return nil
 			}
 		}
+		file_proto_operation_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FromKey); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FromConstant); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SingleFrom); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FunctionNumeric); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FunctionBoolean); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*FunctionSelectField); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 		file_proto_operation_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QuerySingleRequest); i {
+			switch v := v.(*FunctionSingle); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1869,7 +2335,43 @@ func file_proto_operation_proto_init() {
 			}
 		}
 		file_proto_operation_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OperationSingle); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QuerySingleRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QuerySingleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_operation_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*OperationAccount); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1882,26 +2384,31 @@ func file_proto_operation_proto_init() {
 		}
 	}
 	file_proto_operation_proto_msgTypes[3].OneofWrappers = []interface{}{}
-	file_proto_operation_proto_msgTypes[6].OneofWrappers = []interface{}{
+	file_proto_operation_proto_msgTypes[7].OneofWrappers = []interface{}{
+		(*EnumerableFrom_Keys)(nil),
+		(*EnumerableFrom_Iterator)(nil),
+	}
+	file_proto_operation_proto_msgTypes[14].OneofWrappers = []interface{}{
+		(*SingleFrom_Key)(nil),
+	}
+	file_proto_operation_proto_msgTypes[15].OneofWrappers = []interface{}{
 		(*FunctionNumeric_Uint64Operand)(nil),
 		(*FunctionNumeric_Int64Operand)(nil),
 		(*FunctionNumeric_Uint256Operand)(nil),
 		(*FunctionNumeric_Int256Operand)(nil),
 	}
-	file_proto_operation_proto_msgTypes[14].OneofWrappers = []interface{}{
-		(*Function_Numeric)(nil),
-		(*Function_Effectful)(nil),
-		(*Function_SelectField)(nil),
-		(*Function_Sequence)(nil),
-		(*Function_Split)(nil),
+	file_proto_operation_proto_msgTypes[18].OneofWrappers = []interface{}{
+		(*FunctionSingle_Numeric)(nil),
+		(*FunctionSingle_SelectField)(nil),
+		(*FunctionSingle_Boolean)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_operation_proto_rawDesc,
-			NumEnums:      3,
-			NumMessages:   20,
+			NumEnums:      6,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

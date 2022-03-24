@@ -23,74 +23,33 @@ message Asset {
     Uint256 amount = 3;
 }
 
-// FromSingle :: State
-message FromSingle {
-    repeated bytes key = 1;
+message BytesPair {
+    string key = 1;
+    bytes value = 2;
 }
 
-// FromEnumerable :: Stream<State>
-message FromEnumerable {
-    repeated bytes prefix = 1;
-    bytes from = 2;
-    bytes to = 3;
+
+
+
+
+// FromKeys :: Enumerable
+message FromKeys {
+    repeated string keys = 1;
+}
+
+// FromIterator :: Enumerable
+message FromIterator {
+    repeated string prefix = 1;
+    string from = 2;
+    string to = 3;
     bool ascending = 4;
 }
 
-
-// FunctionNumeric :: Numeric -> Numeric
-message FunctionNumeric {
-    enum Operator {
-        UNKNOWN = 0;
-        ADD = 1;
-        SUB = 2;
-        SUBFROM = 3;
-        MUL = 4;
-        DIV = 5;
-        LT = 6;
-        LTE = 7;
-        GT = 8;
-        GTE = 9;
-        EQ = 10;
-        NEQ = 11;
+message EnumerableFrom {
+    oneof from {
+        FromKeys keys = 1;
+        FromIterator iterator = 2;
     }
-    Operator operator = 1;
-    // When the operands are nil, FunctionNumeric act as a n-ary operator on stream of tuple values
-    oneof operand {
-        uint64 uint64Operand = 2;
-        int64 int64Operand = 3;
-        Uint256 Uint256Operand = 4;
-        Int256 Int256Operand = 5;
-    }
-}
-
-message FunctionEffectful {
-    enum FunctionType {
-        UNKNOWN = 0;
-        SELECT = 1;
-        SET = 2;
-        DELETE = 3;
-    }
-    FunctionType ty = 1;
-}
-
-// FunctionSet :: T -> T
-// modifies the value with the computated 
-// Usage: SelectField(field) >> FunctionNumeric(ADD, 3) >> FunctionSet()
-// select field of the current item, add 3 to the field, and set
-message FunctionSet {}
-
-message FunctionDelete {}
-
-// FunctionSelectField ::
-// a, b proto.Message => a -> b
-// This is equal with FieldDescriptor, I just couldnt found how to import it properly
-message FunctionSelectField {
-    int32 fieldNumber = 1;
-    int32 fieldType = 2; // int8, consider switching to enum
-}
-
-message FunctionSequence {
-    repeated Function fn = 1;
 }
 
 // FunctionHighorder takes a single unary function and lifts it to list level
@@ -110,57 +69,159 @@ message FunctionEnumerable {
         DROPWHILE = 9; // pure
         FOREACH = 10; // Lift T -> U, effectful
         CONCAT = 11; // pure
-        FLATMAP = 12; // MAP andthen CONCAT
+        FLATMAP = 12; // MAP andthen CONCAT, fn should return enumerable
         SETALL = 13; // effectful
         DELETEALL = 14; // effectful
     }
-    FunctionType ty = 1;
-    Function fn = 2;
+    FunctionType type = 1;
+    FunctionSingle function = 2;
 }
 
+/*
 // FunctionSplit :: (a -> b) -> (a -> c) -> .. -> merge ((b, c, ..) -> d) -> (a -> d)
 // Use FunctionSplit to simulate Join operations
 message FunctionSplit {
     repeated Function fn = 1;
     Function merge = 2;
 }
+*/
 
 
-message Function {
-    oneof fn {
-        FunctionNumeric numeric = 1;
-        FunctionEffectful effectful = 2;
-        FunctionSelectField selectField = 3;
-        FunctionSequence sequence = 4;
-        FunctionSplit split = 5;
-    } 
-}
-
-message BytesState {
-    bytes key = 1;
-    bytes value = 2;
+message OperationEnumerable {
+    enum OperationType {
+        UNKNOWN = 0;
+        SELECT = 1;
+        SET = 2;
+        DELETE = 3;
+        // create depends on the type of enumerable. 
+        // for mapping enumerable, the elem is stored under the primitive key
+        // for queue enumerable, the elem is stored at the last position
+        CREATE = 4; 
+    }
+    OperationType type = 1;
+    EnumerableFrom from = 2;
+    repeated FunctionEnumerable function = 3;
 }
 
 message QueryEnumerableRequest {
-    repeated FunctionEnumerable ops = 1;
+    repeated OperationEnumerable ops = 1;
 }
 
 message QueryEnumerableResponse {
-    repeated BytesState bytesEnumarable = 1;    
-}
-
-message QuerySingleRequest {
-    repeated Function ops = 1;
-}
-
-message QuerySingleResponse {
-    BytesState bytesSingle = 1;
+    repeated BytesPair pairs = 1;    
 }
 
 service QueryEnumerableService {
     rpc QueryEnumerable(QueryEnumerableRequest) returns (QueryEnumerableResponse);
 }
 
+// QuerySingleRequest{ []OperationSingle{ { SingleFrom{key}, []FunctionSingle{ FunctionNumeric{ ... } } } } } }
+
+// FromKey :: Single
+message FromKey {
+    string key = 1;
+}
+
+message FromConstant {
+    string key = 1;
+    bytes value = 2;
+}
+
+message SingleFrom {
+    oneof from {
+        FromKey key = 1;
+    }
+}
+
+// FunctionNumeric :: Numeric -> Numeric
+message FunctionNumeric {
+    enum Operator {
+        UNKNOWN = 0;
+        ADD = 1;
+        SUB = 2;
+        SUBFROM = 3;
+        MUL = 4;
+        DIV = 5;
+        LT = 6;
+        LTE = 7;
+        GT = 8;
+        GTE = 9;
+        EQ = 10;
+        NEQ = 11;
+    }
+    Operator operator = 1;
+    oneof operand {
+        uint64 uint64Operand = 2;
+        int64 int64Operand = 3;
+        Uint256 Uint256Operand = 4;
+        Int256 Int256Operand = 5;
+    }
+}
+
+message FunctionBoolean {
+    enum Operator {
+        UNKNOWN = 0;
+        AND = 1;
+        OR = 2;
+        XOR = 3;
+        NOT = 4;
+    }
+    Operator operator = 1;
+    repeated FunctionSingle function = 2;
+}
+
+// FunctionSelectField ::
+// a, b proto.Message => a -> b
+// This is equal with FieldDescriptor, I just couldnt found how to import it properly
+message FunctionSelectField {
+    int32 fieldNumber = 1;
+    int32 fieldType = 2; // int8, consider switching to enum
+}
+
+message FunctionSingle {
+    oneof funciton {
+        FunctionNumeric numeric = 1; // Numeric -> Numeric
+        FunctionSelectField selectField = 2;
+        FunctionBoolean boolean = 3;
+        // FunctionSplit split = 4;
+    } 
+}
+
+message OperationSingle {
+    enum OperationType {
+        UNKNOWN = 0;
+        SELECT = 1;
+        SET = 2;
+        DELETE = 3;
+    }
+    OperationType type = 1;
+    string account = 2;
+    SingleFrom from = 3;
+    repeated FunctionSingle functions = 4;
+}
+
+message QuerySingleRequest {
+    repeated OperationSingle ops = 1;
+}
+
+message QuerySingleResponse {
+    BytesPair pair = 1;
+}
+
 service QuerySingleService {
     rpc QuerySingle(QuerySingleRequest) returns (QuerySingleResponse);
+}
+
+// in progress
+
+message OperationAccount {
+    enum OperationType {
+        UNKNOWN = 0;
+        CREATE = 1;
+        DESTRUCT = 2;
+        SUBACCOUNT = 3;
+        LOCK = 4;
+        UNLOCK = 5;
+    }
+    OperationType type = 1;
 }

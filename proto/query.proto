@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package dbci.query;
-
-option go_package = "github.com/mconcat/dbci/query/types";
-
-import "operation.proto";
-

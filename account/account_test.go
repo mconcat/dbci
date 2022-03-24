@@ -48,12 +48,14 @@ func (acc AccountStateBank) Send(acc2 AccountStateBank, coin sdk.Coin) {
 	Translated into:
 
 	Atomic {
-		QuerySingle acc.ID + bank + amount + coin.Denom :: Uint256
-		Sub coin.Amount :: Uint256
-		Set
-		QuerySingle acc2.ID + bank + amount + coin.Denom :: Uint256
-		Add coin.Amount :: Uint256
-		Set
+		Set {
+			FromSingle acc.ID + bank + amount + coin.Denom :: Uint256
+			Sub coin.Amount :: Uint256
+		}
+		Set {
+			FromSingle acc2.ID + bank + amount + coin.Denom :: Uint256
+			Add coin.Amount :: Uint256
+		}
 	}
 */
 }

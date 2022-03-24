@@ -27,4 +27,3 @@ type AccountModule struct {
 
 // type AccountInterchain struct
 
-func Enumerate() Enumerator[T]
