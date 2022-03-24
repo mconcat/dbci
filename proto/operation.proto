@@ -5,17 +5,11 @@ package dbci.operation;
 option go_package = "github.com/mconcat/dbci/operation/types";
 
 message Uint256 {
-    fixed64 a = 1;
-    fixed64 b = 2;
-    fixed64 c = 3;
-    fixed64 d = 4;
+    bytes data = 1;
 }
 
 message Int256 {
-    fixed64 a = 1;
-    fixed64 b = 2;
-    fixed64 c = 3;
-    fixed64 d = 4;
+    bytes data = 1;
 }
 
 message Dec256 {
@@ -29,13 +23,13 @@ message Asset {
     Uint256 amount = 3;
 }
 
-// SelectSingle :: State
-message SelectSingle {
+// FromSingle :: State
+message FromSingle {
     repeated bytes key = 1;
 }
 
-// SelectEnumerable :: Stream<State>
-message SelectEnumerable {
+// FromEnumerable :: Stream<State>
+message FromEnumerable {
     repeated bytes prefix = 1;
     bytes from = 2;
     bytes to = 3;
@@ -69,6 +63,16 @@ message FunctionNumeric {
     }
 }
 
+message FunctionEffectful {
+    enum FunctionType {
+        UNKNOWN = 0;
+        SELECT = 1;
+        SET = 2;
+        DELETE = 3;
+    }
+    FunctionType ty = 1;
+}
+
 // FunctionSet :: T -> T
 // modifies the value with the computated 
 // Usage: SelectField(field) >> FunctionNumeric(ADD, 3) >> FunctionSet()
@@ -95,15 +99,22 @@ message FunctionSequence {
 message FunctionEnumerable {
     enum FunctionType {
         UNKNOWN = 0;
-        MAP = 1; // Lift T -> U
-        FILTER = 2; // Lift T -> bool
-        FOLD = 3; // Lift [T] -> U
-        TAKE = 4; // Nullary 
-        TAKEWHILE = 5; // Lift T -> bool
-        DROP = 6;
-        DROPWHILE = 7;
-        FOREACH = 8; // Same with map but returns the original sequence
+        MAP = 1; // Lift T -> U, pure
+        FILTER = 2; // Lift T -> bool, pure
+        FOLD = 3; // Lift [T] -> U, pure
+        TAKE = 4; // Nullary, pure
+        TAKEWHILE = 5; // Lift T -> bool, pure
+        TAKEFIRST = 6; // Nullary, returns single, pure
+        TAKELAST = 7; // pure
+        DROP = 8; // pure
+        DROPWHILE = 9; // pure
+        FOREACH = 10; // Lift T -> U, effectful
+        CONCAT = 11; // pure
+        FLATMAP = 12; // MAP andthen CONCAT
+        SETALL = 13; // effectful
+        DELETEALL = 14; // effectful
     }
+    FunctionType ty = 1;
     Function fn = 2;
 }
 
@@ -118,10 +129,10 @@ message FunctionSplit {
 message Function {
     oneof fn {
         FunctionNumeric numeric = 1;
-        FunctionSelectField selectField = 2;
-        FunctionSequence sequence = 3;
-        FunctionSplit split = 4;
-        FunctionEnumerable enumerable = 5;
+        FunctionEffectful effectful = 2;
+        FunctionSelectField selectField = 3;
+        FunctionSequence sequence = 4;
+        FunctionSplit split = 5;
     } 
 }
 
@@ -131,8 +142,7 @@ message BytesState {
 }
 
 message QueryEnumerableRequest {
-    SelectEnumerable select = 1;
-    repeated FunctionEnumerable ops = 2;
+    repeated FunctionEnumerable ops = 1;
 }
 
 message QueryEnumerableResponse {
@@ -140,8 +150,7 @@ message QueryEnumerableResponse {
 }
 
 message QuerySingleRequest {
-    SelectSingle select = 1;
-    repeated Function ops = 2;
+    repeated Function ops = 1;
 }
 
 message QuerySingleResponse {
